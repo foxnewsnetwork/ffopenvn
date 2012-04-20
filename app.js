@@ -5,7 +5,7 @@
 
 var express = require('express')
   , routes = require('./routes');
-
+var Resource = require('express-resource');
 var app = module.exports = express.createServer();
 
 // Configuration
@@ -27,9 +27,21 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-// Routes
+/**
+* Routes
+*/
+// Page manager
+app.get( '/', function(req, res){ 
+	res.render("pages/index.jade", { title : "FFOpenVN * alpha" } );
+} ); //end get
 
-app.get('/', routes.index);
+/**
+* Resources
+*/
+app.resource( "artists", require("./resources/artist.js") );
+app.resource( "stories", require("./resources/story.js") );
+app.resource( "chapters", require("./resources/chapter.js") );
+app.resource( "scenes", require("./resources/scene.js") );
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

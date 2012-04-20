@@ -1,0 +1,37 @@
+style(type="text/css)
+	.dialog-box{
+		width : 80%;
+		height : 35%;
+		position : absolute;
+		left : 10%;
+		top : 60%;
+		border : 2px solid black;
+		background-color : rgb(200,198,225);
+		opacity : 0.65;
+		border-radius : 1em;
+		-moz-border-radius: 1em;
+		padding : 1em;
+	}
+	button.same{ 
+		width : 10em;
+		margin-left: 1em;
+	}
+.navbar 
+	.navbar-fixed-top
+		.navbar-inner
+			.container
+				a.brand #{title}				
+.container
+	.hero-unit
+		h1 #{title}
+		p Welcome back. Pardon the lack of dust, we're too early to have built up any.
+		p
+			button.btn.same(href="/stories?category=0") Fan Fiction
+			button.btn.same(href="/stories?category=1") Original
+			button.btn.btn-primary.same(href="/stories/new") New Story
+	.row
+		#playground
+			h1 stuff
+	.dialog-box
+		#dialog-box
+			p nothing
