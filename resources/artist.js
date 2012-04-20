@@ -1,5 +1,5 @@
 this.new = function(req, res){ 
-	res.render("artists/new.jade");
+	res.render("artists/new.jade" );
 }; // end new
 this.destroy = function(req, res){ }; // end destroy
 this.create = function(req, res){ }; // end create
