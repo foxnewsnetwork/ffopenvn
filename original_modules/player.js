@@ -1,6 +1,6 @@
 // mongoose for mongodb storage
 var mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost/my_gameserver_database');
+mongoose.connect('mongodb://localhost/my_ffopenvn_database');
 
 // Password encryption use
 var md5 = require( "MD5" );
