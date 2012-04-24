@@ -2,41 +2,44 @@
 * Demo File
 */
 // var PIC_REPO = "http://i299.photobucket.com/albums/mm281/foxnewsnetwork/";
-var PIC_REPO = "images/"
+var PIC_REPO = "images/demo/"
 var demodata = [
 	{
 		'background' : { 
-			'image' :  PIC_REPO + "lvl1.png"
+			'image' :  PIC_REPO + "bg.jpg"
 		} , 
 		'foreground' : { 
-			'images' : [],
-			'positions' : []
+			'images' : [PIC_REPO + "sayuka-p3e1.png"],
+			'positions' : [{ x : 25, y : 8}],
+			'sizes' : [{ width : 32, height : 93}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
 			'content' : "Hi there, welcome to FFOpenVN. My master and I are building a visual novel creation and publication platform for all the writers, artists, and readers out there."
 		}
-	} , // end step 0
+	} ,// end step 0
 	{
 		'background' : { 
-			'image' :  PIC_REPO + "lvl1.png"
+			'image' :  PIC_REPO + "bg.jpg"
 		} , 
 		'foreground' : { 
-			'images' : [],
-			'positions' : []
+			'images' : [PIC_REPO + "sayuka-p1e1.png"],
+			'positions' : [{ x : 32, y : 8}],
+			'sizes' : [{ width : 20, height : 93}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
-			'content' : "But you've caught me at a bad time; we're still in the middle of construction... and Master currently isn't here right now."
+			'content' : "I wasn't expecting guests this early. I'm still just putting my boxes away... and Master currently isn't here right now."
 		}
-	} , // end step 1
+	}, // end step 1
 	{
 		'background' : { 
-			'image' :  PIC_REPO + "lvl1.png"
+			'image' :  PIC_REPO + "bg.jpg"
 		} , 
 		'foreground' : { 
-			'images' : [],
-			'positions' : []
+			'images' : [PIC_REPO + "sayuka-p1e2.png"],
+			'positions' : [{ x : 32, y : 8}],
+			'sizes' : [{ width : 20, height : 93}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
@@ -45,24 +48,26 @@ var demodata = [
 	} , // end step 2
 	{
 		'background' : { 
-			'image' :  PIC_REPO + "lvl1.png"
+			'image' :  PIC_REPO + "step1.jpg"
 		} , 
 		'foreground' : { 
-			'images' : [],
-			'positions' : []
+			'images' : [PIC_REPO + "sayuka-p1e2.png"],
+			'positions' : [{ x : 4, y : 8}],
+			'sizes' : [{ width : 20, height : 93}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
-			'content' : "When I finish this project, you would be able to start up your own fan fiction or original visual novel here."
+			'content' : "Here, you'll be able to start writing your own visual novels (like this one, but better)."
 		}
 	} , // end step 3
 	{
 		'background' : { 
-			'image' :  PIC_REPO + "lvl1.png"
+			'image' :  PIC_REPO + "step2.jpg"
 		} , 
 		'foreground' : { 
-			'images' : [],
-			'positions' : []
+			'images' : [PIC_REPO + "sayuka-p2e2.png"],
+			'positions' : [{ x : 0, y : 8}],
+			'sizes' : [{ width : 35, height : 93}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
@@ -71,12 +76,12 @@ var demodata = [
 	} , // end step 4
 	{
 		'background' : { 
-			'image' :  PIC_REPO + "lvl1.png"
+			'image' :  PIC_REPO + "Step3.jpg"
 		} , 
 		'foreground' : { 
-			'images' : [PIC_REPO + "upa.png"],
-			'positions' : [{ x : 10, y : 10}] ,
-			'sizes' : [{ width : 10, height : 10}]
+			'images' : [PIC_REPO + "sayuka-p2e2.png"],
+			'positions' : [{ x : 0, y : 8}],
+			'sizes' : [{ width : 35, height : 93}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
@@ -85,106 +90,138 @@ var demodata = [
 	} , // end step 5
 	{
 		'background' : { 
-			'image' :  PIC_REPO + "lvl1.png"
+			'image' :  PIC_REPO + "Step4.jpg"
 		} , 
 		'foreground' : { 
-			'images' : [PIC_REPO + "upa.png"],
-			'positions' : [{ x : 10, y : 10}] ,
-			'sizes' : [{ width : 10, height : 10}]
+			'images' : [PIC_REPO + "sayuka-p2e2.png", PIC_REPO + "00.png"],
+			'positions' : [{ x : 0, y : 8}, { x : 75, y : 22}],
+			'sizes' : [{ width : 35, height : 93}, { width : 15, height : 80}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
-			'content' : "Don't tell Master I told you this, but I think he also keeps lots of other girls like me locked up in here."
+			'content' : "He also keeps a lot of girls like me and Madoka for future artists to use. "
 		}
-	} , // end step 5
+	} , // end step 6
 	{
 		'background' : { 
-			'image' :  PIC_REPO + "lvl1.png"
+			'image' :  PIC_REPO + "Step4.jpg"
 		} , 
 		'foreground' : { 
-			'images' : [PIC_REPO + "upa.png"],
-			'positions' : [{ x : 10, y : 10}] ,
-			'sizes' : [{ width : 10, height : 10}]
+			'images' : [PIC_REPO + "sayuka-p2e2.png", PIC_REPO + "00.png"],
+			'positions' : [{ x : 0, y : 8}, { x : 75, y : 22}],
+			'sizes' : [{ width : 35, height : 93}, { width : 15, height : 80}]
+		} , 
+		'text' : { 
+			'speaker' : "Madoka",
+			'content' : "Onee-chan, is it time for my cameo yet? "
+		}
+	} , // end step 7
+	{
+		'background' : { 
+			'image' :  PIC_REPO + "step5.jpg"
+		} , 
+		'foreground' : { 
+			'images' : [PIC_REPO + "sayuka-p1e2.png"],
+			'positions' : [{ x : 1, y : 8}],
+			'sizes' : [{ width : 20, height : 93}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
 			'content' : "I really want to see the world outside, but Master doesn't let me leave here. So please write me story and let me see the world through your imagination."
 		}
-	} , // end step 6
+	} , // end step 8
 	{
 		'background' : { 
-			'image' :  PIC_REPO + "lvl1.png"
+			'image' :  PIC_REPO + "step55.jpg"
 		} , 
 		'foreground' : { 
-			'images' : [PIC_REPO + "upa.png"],
-			'positions' : [{ x : 10, y : 10}] ,
-			'sizes' : [{ width : 10, height : 10}]
+			'images' : [PIC_REPO + "sayuka-p1e2.png"],
+			'positions' : [{ x : 1, y : 8}],
+			'sizes' : [{ width : 20, height : 93}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
-			'content' : "If you'd, I'll even sell stuff like sweaters and such through your novel for you."
+			'content' : "If you'd like, Madoka and I can even sell real stuff for you through your visual novel."
 		}
-	} , // end step 7
+	} , // end step 9
 	{
 		'background' : { 
-			'image' :  PIC_REPO + "lvl1.png"
+			'image' :  PIC_REPO + "step55.jpg"
 		} , 
 		'foreground' : { 
-			'images' : [PIC_REPO + "upa.png"],
-			'positions' : [{ x : 10, y : 10}] ,
-			'sizes' : [{ width : 10, height : 10}]
+			'images' : [PIC_REPO + "sayuka-p1e2.png"],
+			'positions' : [{ x : 1, y : 8}],
+			'sizes' : [{ width : 20, height : 93}]
+		} , 
+		'text' : { 
+			'speaker' : "Sayuka",
+			'content' : "If you'd like, Madoka and I can even sell real stuff for you through your visual novel."
+		}
+	} , // end step 10
+	{
+		'background' : { 
+			'image' :  PIC_REPO + "step6.jpg"
+		} , 
+		'foreground' : { 
+			'images' : [PIC_REPO + "sayuka-p3e1.png"],
+			'positions' : [{ x : 1, y : 8}],
+			'sizes' : [{ width : 35, height : 93}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
 			'content' : "Once you're done, you can publish it here with me or save it to your computer as an .exe file."
 		}
-	} , // end step 8
+	} , // end step 11
 	{
 		'background' : { 
-			'image' :  PIC_REPO + "lvl1.png"
+			'image' :  PIC_REPO + "step7.jpg"
 		} , 
 		'foreground' : { 
-			'images' : [PIC_REPO + "upa.png"],
-			'positions' : [{ x : 10, y : 10}] ,
-			'sizes' : [{ width : 10, height : 10}]
+			'images' : [PIC_REPO + "sayuka-p3e1.png"],
+			'positions' : [{ x : 1, y : 8}],
+			'sizes' : [{ width : 35, height : 93}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
 			'content' : "Now everyone everywhere will be able to read your work. Hopefully, you'll become famous and someone at SHAFT will make an anime adaption of your work."
 		}
-	} ,// end step 9
+	} , // end step 12
 	{
 		'background' : { 
-			'image' :  PIC_REPO + "lvl1.png"
+			'image' :  PIC_REPO + "step8.jpg"
 		} , 
 		'foreground' : { 
-			'images' : [PIC_REPO + "upa.png"],
-			'positions' : [{ x : 10, y : 10}] ,
-			'sizes' : [{ width : 10, height : 10}]
+			'images' : [PIC_REPO + "sayuka-p2e3.png"],
+			'positions' : [{ x : 1, y : 8}],
+			'sizes' : [{ width : 35, height : 93}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
 			'content' : "I will let you know if THAT happens, but if not, I can at least keep track for you how your readers feel about your story and characters."
 		}
-	} , // end step 10
+	} , // end step 12
 	{
 		'foreground' : { 
-			'images' : [PIC_REPO + "upa.png"],
-			'positions' : [{ x : 10, y : 10}] ,
-			'sizes' : [{ width : 10, height : 10}]
+			'images' : [PIC_REPO + "sayuka-p1e1.png"],
+			'positions' : [{ x : 72, y : 8}] ,
+			'sizes' : [{ width : 20, height : 93}]
 		} , 
 		'text' : { 
 			'speaker' : "Sayuka",
-			'content' : "But unfortunately, FFOpenVN isn't fully ready yet. But I would love it if you could sign up to keep me company during the current alpha phase."
+			'content' : "But unfortunately, FFOpenVN isn't fully ready yet. But I would love it if you could sign up to keep me company while I build the rest of this. If you'd like to email master and give him feedback, here is his email : mmnashi90@gmail.com."
 		}
-	} // end step 10
-];
+	} // end step 13
+]; // end demodata
 
 var CURRENT_SCENE = 0;
 $(document).ready( function(){
+	$(".hero-unit").hide();
 	var demovn = new FFOpenVN();
 	demovn.PlayScene( demodata[0] );
 	demovn.Next( function(){ 
+		if (CURRENT_SCENE == demodata.length - 2 ) { 
+			$(".hero-unit").show();
+		} // end if
 		CURRENT_SCENE += 1;
 		CURRENT_SCENE %= demodata.length;
 		demovn.PlayScene( demodata[CURRENT_SCENE] );
