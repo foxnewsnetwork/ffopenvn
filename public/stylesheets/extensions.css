@@ -1,0 +1,35 @@
+#tt {
+ position:absolute;
+ display:block;
+ z-index: 999;
+ -moz-border-radius: 10px;
+ border-radius: 10px;
+ }
+ #tttop {
+ display:block;
+ height:5px;
+ margin-left:5px;
+ z-index: 999;
+ overflow:hidden;
+ -moz-border-radius: 10px;
+ border-radius: 10px;
+ }
+ #ttcont {
+ display:block;
+ padding:2px 12px 3px 7px;
+ margin-left:5px;
+ background:#666;
+ color:#fff;
+ z-index: 999;
+ -moz-border-radius: 10px;
+ border-radius: 10px;
+ }
+#ttbot {
+display:block;
+height:5px;
+margin-left:5px;
+z-index: 999;
+overflow:hidden;
+-moz-border-radius: 10px;
+ border-radius: 10px;
+}

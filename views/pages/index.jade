@@ -1,20 +1,18 @@
+script(type="text/javascript", src="javascripts/flotile/tooltip.js")
+script(type="text/javascript", src="javascripts/flotile/flotile.js")
+script(type="text/javascript", src="javascripts/flotile/flotile-bridge.js")
+script(type="text/javascript", src="javascripts/pages/demo.js")
+link(href="/stylesheets/extensions.css", media="screen", rel="stylesheet", type="text/css")
 style(type="text/css)
-	.dialog-box{
-		width : 80%;
-		height : 35%;
-		position : absolute;
-		left : 10%;
-		top : 60%;
-		border : 2px solid black;
-		background-color : rgb(200,198,225);
-		opacity : 0.65;
-		border-radius : 1em;
-		-moz-border-radius: 1em;
-		padding : 1em;
-	}
 	a.same{ 
 		width : 10em;
 		margin-left: 1em;
+	}
+	p#visual-novel-dialogue{ 
+		font-size : 1.5em;
+		text-align : center;
+		font-family : "Verdana";
+		font-weight : 900;
 	}
 .navbar 
 	.navbar-fixed-top
@@ -26,12 +24,9 @@ style(type="text/css)
 		h1 #{title}
 		p Welcome back. Pardon the lack of dust, we're too early to have built up any.
 		p
-			a.btn.same(href="/stories?category=0") Fan Fiction
-			a.btn.same(href="/stories?category=1") Original
-			a.btn.btn-primary.same(href="/stories/new") New Story
+			a.btn.same(href="#") Fan Fiction
+			a.btn.same(href="#") Original
+			a.btn.btn-primary.same(href="#") New Story
 	.row
 		#playground
 			h1 stuff
-	.dialog-box
-		#dialog-box
-			p nothing

@@ -10,6 +10,13 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 // The one and only schematic that ships with the server
+/** 
+* data = {
+* pic : [picobjects]
+* text : String
+* miscellanious stuff coming soon
+* } 
+*/
 var SceneSchema = new Schema( { 
 	id : ObjectId ,
 	story_id : String ,
