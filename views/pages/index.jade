@@ -1,9 +1,20 @@
+script(type="text/javascript", src="socket.io/socket.io.js" )
+script(type="text/javascript", src="javascripts/thoughts/thoughts.js")
 script(type="text/javascript", src="javascripts/flotile/tooltip.js")
 script(type="text/javascript", src="javascripts/flotile/flotile.js")
 script(type="text/javascript", src="javascripts/flotile/flotile-bridge.js")
 script(type="text/javascript", src="javascripts/pages/demo.js")
 link(href="/stylesheets/extensions.css", media="screen", rel="stylesheet", type="text/css")
 style(type="text/css)
+	div#thx4{ 
+		width : 100%;
+		height : 5em;
+		text-align : center;
+		background-color : rgb( 213, 200, 127 );
+		border : 3px solid yellow;
+		border-radius : 1em;
+		-moz-border-radius : 1em;
+	}
 	a.same{ 
 		width : 10em;
 		margin-left: 1em;
@@ -27,6 +38,8 @@ style(type="text/css)
 			a.btn.same(href="#") Fan Fiction
 			a.btn.same(href="#") Original
 			a.btn.btn-primary.same(href="#") New Story
-	.row
-		#playground
-			h1 stuff
+		p	
+			#signupbox
+				input#email(placeholder="example@me.com")
+				button#signup.btn.btn-primary.large Signup!
+			

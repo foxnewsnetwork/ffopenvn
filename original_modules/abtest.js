@@ -5,7 +5,8 @@ var ANALYTICS_SITE = "gamertiser.com" ,
 	ANALYTICS_PATH = "/api/v1/stats" ,
 	ANALYTICS_PORT = 80,
 	GAME_TOKEN = 12345 ,
-	ANALYTICS_STORAGE = "./public/analytics/";
+	ANALYTICS_STORAGE = "./public/analytics/" ,
+	DATA_STORAGE = "./public/analytics/";
 	
 /****************************
 * Node Package Declarations *
@@ -41,6 +42,22 @@ var SplitTest = function(){
 			return false;
 		} //end else
 	} // end AddUser
+	
+	this.SendData = function(rawdata){ 
+		var data = rawdata;
+		var ip = data['ip']
+		data['beta'] = this.beta[ip] || false;
+		try { 
+			fs.createWriteStream( DATA_STORAGE + "data.log", { 
+				flags: "a",
+				encoding: "encoding",
+				mode: 0666
+			} ).write(JSON.stringify(data));
+		} // end try
+		catch(err) { 
+			console.log(err);
+		} // end catch
+	} // end SendData	
 	
 	// Sends analytics to gamertisers as well as save a local copy
 	this.SendAnalytics = function(data){ 

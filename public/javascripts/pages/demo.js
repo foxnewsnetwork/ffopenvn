@@ -188,5 +188,28 @@ $(document).ready( function(){
 		CURRENT_SCENE += 1;
 		CURRENT_SCENE %= demodata.length;
 		demovn.PlayScene( demodata[CURRENT_SCENE] );
-	} );
-} );
+	} ); // end next
+	$("a").mouseover(tooltip.show("Feature not ready yet!"));
+	$("a").mouseleave(tooltip.hide());
+} ); // end ready
+
+socket.on( "connection", function(id) { 
+	$("#signup").click(function(){
+		var email = $("#email").val();
+		var regemail = /^[a-zA-Z0-9\-_.,%]{2,}@[a-zA-Z0-9\-_%,]{2,}\.[a-zA-Z0-9]{2,}$/;
+		if (regemail.test(email)) { 
+			var data = { 
+			email : email
+			}; // end data
+			thoughts.FireAdmin( "data up", data );
+		} // end if
+		else { 
+			$("#email").css("border", "2px solid red");
+		} // end else
+		
+	} ); // end click
+	
+	thoughts.AddAdmin( "data down", function(result) { 
+		$("#signupbox").html("<div id='thx4'><h3>Thanks for signing up!</h3></div>");
+	} ); // end AddAdmin
+} ); // end on

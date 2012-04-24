@@ -2,11 +2,15 @@
 /**
  * Module dependencies.
  */
-
+// Express
 var express = require('express')
   , routes = require('./routes');
 var Resource = require('express-resource');
 var app = module.exports = express.createServer();
+
+// Custom thoughts
+var thoughts = require( "./original_modules/thoughts.js" ); 
+thoughts.initialize( app );
 
 // Configuration
 
