@@ -635,7 +635,7 @@ character.DialogueBox = function(p) {
 	this.CSS("top","60%");
 	this.CSS("border","2px solid black");
 	this.CSS("background-color","rgb(200,198,225)");
-	this.CSS("opacity","0.65");
+	this.CSS("opacity","0.85");
 	this.CSS("border-radius","1em");
 	this.CSS("-moz-border-radius","1em");
 	this.CSS("padding","1em");
@@ -646,13 +646,13 @@ character.DialogueBox = function(p) {
 	this.speaker.Position({ x : 10, y : 52});
 	this.speaker.CSS("border","2px solid black");
 	this.speaker.CSS("background-color","rgb(200,198,225)");
-	this.speaker.CSS("opacity","0.65");
+	this.speaker.CSS("opacity","0.85");
 	this.speaker.CSS("border-radius","1em");
 	this.speaker.CSS("-moz-border-radius","1em");
 	this.speaker.CSS("padding","0.7em");
 	this.speaker.CSS("z-index","950");
 	this.speaker.CSS("text-align","center");
-	this.speaker.CSS("font-size","1.5em");
+	this.speaker.CSS("font-size","1.75em");
 }
 character.DialogueBox.__name__ = ["character","DialogueBox"];
 character.DialogueBox.__super__ = main.Tile;

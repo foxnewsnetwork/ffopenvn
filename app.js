@@ -36,7 +36,11 @@ app.configure('production', function(){
 */
 // Page manager
 app.get( '/', function(req, res){ 
-	res.render("pages/index.jade", { title : "FFOpenVN * alpha" } );
+	res.render("pages/index.jade", { title : "FFOpenVN * alpha", count : 0 } );
+} ); //end get
+
+app.get( '/:id', function(req, res){ 
+	res.render("pages/index.jade", { title : "FFOpenVN * alpha", count : req.params['id'] } );
 } ); //end get
 
 /**

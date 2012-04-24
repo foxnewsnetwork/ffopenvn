@@ -210,19 +210,30 @@ var demodata = [
 			'speaker' : "Sayuka",
 			'content' : "But unfortunately, FFOpenVN isn't fully ready yet. But I would love it if you could sign up to keep me company while I build the rest of this. If you'd like to email master and give him feedback, here is his email : mmnashi90@gmail.com."
 		}
-	} // end step 13
+	} , // end step 13
+	{
+		'foreground' : { 
+			'images' : [PIC_REPO + "00.png"],
+			'positions' : [{ x : 75, y : 22}] ,
+			'sizes' : [{ width : 15, height : 80}]
+		} , 
+		'text' : { 
+			'speaker' : "Madoka",
+			'content' : "That's the demo folks, click if you'd like to see it repeated.."
+		}
+	} // end step 14
 ]; // end demodata
 
 var CURRENT_SCENE = 0;
 $(document).ready( function(){
 	$(".hero-unit").hide();
 	var demovn = new FFOpenVN();
-	demovn.PlayScene( demodata[0] );
+	demovn.PlayScene( demodata[CURRENT_SCENE] );
 	demovn.Next( function(){ 
-		if (CURRENT_SCENE == demodata.length - 2 ) { 
+		if (CURRENT_SCENE == demodata.length - 3 ) { 
 			$(".hero-unit").show();
 		} // end if
-		CURRENT_SCENE += 1;
+		CURRENT_SCENE++;
 		CURRENT_SCENE %= demodata.length;
 		demovn.PlayScene( demodata[CURRENT_SCENE] );
 	} ); // end next
