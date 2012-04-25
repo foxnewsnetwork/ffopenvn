@@ -546,7 +546,7 @@ character.VisualNovel.prototype.Click = function(cb) {
 	if(cb != null) {
 		this.dialogue.Click(cb);
 		this.ui[0].Click(cb);
-	} else main.Tile.prototype.Click.call(this,cb);
+	} else this.dialogue.Click(cb);
 }
 character.VisualNovel.prototype.__class__ = character.VisualNovel;
 if(typeof haxe=='undefined') haxe = {}
@@ -674,6 +674,10 @@ character.BackgroundDisplay = function(p) {
 character.BackgroundDisplay.__name__ = ["character","BackgroundDisplay"];
 character.BackgroundDisplay.__super__ = main.Tile;
 for(var k in main.Tile.prototype ) character.BackgroundDisplay.prototype[k] = main.Tile.prototype[k];
+character.BackgroundDisplay.prototype.Show = function(cb) {
+	if(this.image == null) return;
+	main.Tile.prototype.Show.call(this,cb);
+}
 character.BackgroundDisplay.prototype.__class__ = character.BackgroundDisplay;
 character.SceneDisplay = function(p) {
 	if( p === $_ ) return;

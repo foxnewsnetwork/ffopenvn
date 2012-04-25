@@ -80,7 +80,7 @@ var demodata = [
 		} , 
 		'foreground' : { 
 			'images' : [PIC_REPO + "sayuka-p2e2.png"],
-			'positions' : [{ x : 0, y : 8}],
+			'positions' : [{ x : 55, y : 8}],
 			'sizes' : [{ width : 35, height : 93}]
 		} , 
 		'text' : { 
@@ -230,6 +230,9 @@ $(document).ready( function(){
 	var demovn = new FFOpenVN();
 	demovn.Load( demodata );
 	demovn.Scene( CURRENT_SCENE );
+	if( CURRENT_SCENE == demodata.length - 3 ) { 
+		$(".hero-unit").show();	
+	} // end if
 	demovn.Click( function(){ 
 		demovn.Next();
 		CURRENT_SCENE++;
