@@ -398,27 +398,31 @@ main.Tile.__interfaces__ = [main.Statistics];
 if(typeof character=='undefined') character = {}
 character.VisualNovel = function(p) {
 	if( p === $_ ) return;
-	this.ui_next = new main.Tile();
-	this.ui_next.CSS("background-color","rgb(200,198,225)");
-	this.ui_next.Mouseover(function(e) {
+	main.Tile.call(this);
+	this.dialogue = new character.DialogueBox();
+	this.ending = [];
+	this.scenes = [];
+	this.count = 0;
+	this.ui = [];
+	this.ui.push(new main.Tile());
+	this.loading = new character.LoadingDisplay();
+	this.loading.HTML("<h1>Now Loading...</h1>");
+	this.ui[0].CSS("background-color","rgb(200,198,225)");
+	this.ui[0].Mouseover(function(e) {
 		main.Tooltip.show("Next");
 	});
-	this.ui_next.Mouseleave(function(e) {
+	this.ui[0].Mouseleave(function(e) {
 		main.Tooltip.hide();
 	});
-	this.ui_next.CSS("z-index","998");
-	this.ui_next.CSS("opacity","0.65");
-	this.ui_next.CSS("border","2px solid black");
-	this.ui_next.CSS("border-radius","1em");
-	this.ui_next.CSS("-moz-border-radius","1em");
-	this.ui_next.Size({ width : 4, height : 4});
-	this.ui_next.Position({ x : 90, y : 55});
-	this.ui_next.CSS("text-align","center");
-	this.ui_next.HTML(">>>");
-	this.dialogue = new character.DialogueBox();
-	this.characters = [];
-	this.background = new character.BackgroundDisplay();
-	main.Tile.call(this);
+	this.ui[0].CSS("z-index","998");
+	this.ui[0].CSS("opacity","0.75");
+	this.ui[0].CSS("border","2px solid black");
+	this.ui[0].CSS("border-radius","1em");
+	this.ui[0].CSS("-moz-border-radius","1em");
+	this.ui[0].Size({ width : 4, height : 4});
+	this.ui[0].Position({ x : 90, y : 55});
+	this.ui[0].CSS("text-align","center");
+	this.ui[0].HTML(">>>");
 }
 character.VisualNovel.__name__ = ["character","VisualNovel"];
 character.VisualNovel.__super__ = main.Tile;
@@ -427,90 +431,122 @@ character.VisualNovel.main = function() {
 	var FUCKINGNIGGERS = "j23i2j";
 }
 character.VisualNovel.prototype.dialogue = null;
-character.VisualNovel.prototype.characters = null;
-character.VisualNovel.prototype.background = null;
-character.VisualNovel.prototype.ui_next = null;
-character.VisualNovel.prototype.Remove = function() {
-	main.Tile.prototype.Remove.call(this);
-	this.background.Remove();
-	this.ui_next.Remove();
-	var _g1 = 0, _g = this.characters.length;
-	while(_g1 < _g) {
-		var k = _g1++;
-		this.characters[k].Remove();
+character.VisualNovel.prototype.scenes = null;
+character.VisualNovel.prototype.count = null;
+character.VisualNovel.prototype.ui = null;
+character.VisualNovel.prototype.loading = null;
+character.VisualNovel.prototype.ending = null;
+character.VisualNovel.prototype.Show = function(cb) {
+	if(cb != null) main.Tile.prototype.Show.call(this,cb); else {
+		this.scenes[this.count].Show();
+		var _g1 = 0, _g = this.ui.length;
+		while(_g1 < _g) {
+			var j = _g1++;
+			this.ui[j].Show();
+		}
+		this.dialogue.Show();
 	}
 }
 character.VisualNovel.prototype.Hide = function(cb) {
-	main.Tile.prototype.Hide.call(this,cb);
-	if(cb == null) {
+	if(cb != null) main.Tile.prototype.Hide.call(this,cb); else {
+		var _g1 = 0, _g = this.scenes.length;
+		while(_g1 < _g) {
+			var k = _g1++;
+			this.scenes[k].Hide();
+		}
+		var _g1 = 0, _g = this.ui.length;
+		while(_g1 < _g) {
+			var j = _g1++;
+			this.ui[j].Hide();
+		}
 		this.dialogue.Hide();
-		this.background.Hide();
-		var _g1 = 0, _g = this.characters.length;
-		while(_g1 < _g) {
-			var k = _g1++;
-			this.characters[k].Hide();
-		}
-		this.ui_next.Hide();
 	}
 }
-character.VisualNovel.prototype.Show = function(cb) {
-	main.Tile.prototype.Show.call(this,cb);
+character.VisualNovel.prototype.Load = function(scenes) {
+	this.KillScenes();
+	this.LoadingScreen(true);
+	this.scenes = [];
+	this.dialogue.Hide();
+	this.dialogue.Load(scenes);
+	var _g1 = 0, _g = scenes.length;
+	while(_g1 < _g) {
+		var k = _g1++;
+		this.scenes.push(new character.SceneDisplay());
+		this.scenes[k].Hide();
+		this.scenes[k].Load(scenes[k]);
+	}
+	this.count = 0;
+	this.LoadingScreen(false);
+	this.dialogue.Show();
+}
+character.VisualNovel.prototype.Scene = function(num) {
+	if(num == null) return this.scenes[this.count]; else {
+		this.scenes[this.count].Hide();
+		this.count = num;
+		this.dialogue.Chat(num);
+		this.scenes[this.count].Show();
+		return this.scenes[this.count];
+	}
+}
+character.VisualNovel.prototype.LoadingDisplay = function() {
+	return this.loading;
+}
+character.VisualNovel.prototype.LoadingScreen = function(flag) {
+	if(flag) this.loading.Show(); else this.loading.Hide();
+}
+character.VisualNovel.prototype.Remove = function() {
+	this.KillScenes();
+	this.dialogue.Remove();
+	var _g1 = 0, _g = this.ui.length;
+	while(_g1 < _g) {
+		var k = _g1++;
+		this.ui[k].Remove();
+	}
+	main.Tile.prototype.Remove.call(this);
+}
+character.VisualNovel.prototype.End = function(cb) {
 	if(cb == null) {
-		this.dialogue.Show();
-		this.background.Show();
-		var _g1 = 0, _g = this.characters.length;
+		var _g1 = 0, _g = this.ending.length;
 		while(_g1 < _g) {
 			var k = _g1++;
-			this.characters[k].Show();
+			this.ending[k]();
 		}
-		this.ui_next.Show();
+	} else this.ending.push(cb);
+}
+character.VisualNovel.prototype.Next = function() {
+	this.scenes[this.count].Hide();
+	this.count++;
+	if(this.count >= this.scenes.length) {
+		this.count--;
+		this.End();
+		return this.scenes[this.count];
+	} else {
+		this.dialogue.Chat(this.count);
+		this.scenes[this.count].Show();
+		return this.scenes[this.count];
 	}
 }
-character.VisualNovel.prototype.Next = function(cb) {
-	if(cb == null) this.ui_next.Click(); else {
+character.VisualNovel.prototype.Previous = function() {
+	this.scenes[this.count].Hide();
+	this.count--;
+	this.count = this.count < 0?0:this.count;
+	this.dialogue.Chat(this.count);
+	this.scenes[this.count].Show();
+	return this.scenes[this.count];
+}
+character.VisualNovel.prototype.KillScenes = function() {
+	var _g1 = 0, _g = this.scenes.length;
+	while(_g1 < _g) {
+		var k = _g1++;
+		this.scenes[k].Remove();
+	}
+	this.scenes = [];
+}
+character.VisualNovel.prototype.Click = function(cb) {
+	if(cb != null) {
 		this.dialogue.Click(cb);
-		this.ui_next.Click(cb);
-	}
-}
-character.VisualNovel.prototype.Background = function() {
-	return this.background;
-}
-character.VisualNovel.prototype.Transition = function() {
-	this.Hide();
-	this.Show();
-}
-character.VisualNovel.prototype.PlayScene = function(scene) {
-	if(scene.background != null) {
-		if(scene.background.image != null) {
-			this.background.SetAnimation(scene.background.image);
-			this.background.CSS("z-index","850");
-		}
-	} else this.background.Hide();
-	if(scene.foreground != null) {
-		var _g1 = 0, _g = this.characters.length;
-		while(_g1 < _g) {
-			var k = _g1++;
-			this.characters[k].Remove();
-		}
-		this.characters = [];
-		if(scene.foreground.images != null) {
-			var _g1 = 0, _g = scene.foreground.images.length;
-			while(_g1 < _g) {
-				var k = _g1++;
-				this.characters.push(new character.CharacterDisplay());
-				this.characters[k].SetAnimation(scene.foreground.images[k]);
-				this.characters[k].Position(scene.foreground.positions[k]);
-				this.characters[k].Size(scene.foreground.sizes[k]);
-				this.characters[k].CSS("z-index",850 + k + "");
-			}
-		}
-	}
-	if(scene.text != null) {
-		if(scene.text.speaker != null) {
-			this.dialogue.Chat(scene.text.content,scene.text.speaker);
-			this.dialogue.CSS("z-index","950");
-		}
-	}
+		this.ui[0].Click(cb);
+	} else main.Tile.prototype.Click.call(this,cb);
 }
 character.VisualNovel.prototype.__class__ = character.VisualNovel;
 if(typeof haxe=='undefined') haxe = {}
@@ -523,6 +559,22 @@ haxe.Log.clear = function() {
 	js.Boot.__clear_trace();
 }
 haxe.Log.prototype.__class__ = haxe.Log;
+character.LoadingDisplay = function(p) {
+	if( p === $_ ) return;
+	main.Tile.call(this);
+	this.Position({ x : 40, y : 40});
+	this.Size({ width : 25, height : 25});
+	this.Mouseover(function(e) {
+		main.Tooltip.show("Still Loading, buddy");
+	});
+	this.Mouseleave(function(e) {
+		main.Tooltip.hide();
+	});
+}
+character.LoadingDisplay.__name__ = ["character","LoadingDisplay"];
+character.LoadingDisplay.__super__ = main.Tile;
+for(var k in main.Tile.prototype ) character.LoadingDisplay.prototype[k] = main.Tile.prototype[k];
+character.LoadingDisplay.prototype.__class__ = character.LoadingDisplay;
 character.CharacterDisplay = function(p) {
 	if( p === $_ ) return;
 	main.Tile.call(this);
@@ -623,10 +675,91 @@ character.BackgroundDisplay.__name__ = ["character","BackgroundDisplay"];
 character.BackgroundDisplay.__super__ = main.Tile;
 for(var k in main.Tile.prototype ) character.BackgroundDisplay.prototype[k] = main.Tile.prototype[k];
 character.BackgroundDisplay.prototype.__class__ = character.BackgroundDisplay;
+character.SceneDisplay = function(p) {
+	if( p === $_ ) return;
+	this.characters = [];
+	this.background = new character.BackgroundDisplay();
+	main.Tile.call(this);
+}
+character.SceneDisplay.__name__ = ["character","SceneDisplay"];
+character.SceneDisplay.__super__ = main.Tile;
+for(var k in main.Tile.prototype ) character.SceneDisplay.prototype[k] = main.Tile.prototype[k];
+character.SceneDisplay.prototype.characters = null;
+character.SceneDisplay.prototype.background = null;
+character.SceneDisplay.prototype.Remove = function() {
+	main.Tile.prototype.Remove.call(this);
+	this.background.Remove();
+	var _g1 = 0, _g = this.characters.length;
+	while(_g1 < _g) {
+		var k = _g1++;
+		this.characters[k].Remove();
+	}
+}
+character.SceneDisplay.prototype.Hide = function(cb) {
+	main.Tile.prototype.Hide.call(this,cb);
+	if(cb == null) {
+		this.background.Hide();
+		var _g1 = 0, _g = this.characters.length;
+		while(_g1 < _g) {
+			var k = _g1++;
+			this.characters[k].Hide();
+		}
+	}
+}
+character.SceneDisplay.prototype.Show = function(cb) {
+	main.Tile.prototype.Show.call(this,cb);
+	if(cb == null) {
+		this.background.Show();
+		var _g1 = 0, _g = this.characters.length;
+		while(_g1 < _g) {
+			var k = _g1++;
+			this.characters[k].Show();
+		}
+	}
+}
+character.SceneDisplay.prototype.Click = function(cb) {
+}
+character.SceneDisplay.prototype.Background = function() {
+	return this.background;
+}
+character.SceneDisplay.prototype.Transition = function() {
+	this.Hide();
+	this.Show();
+}
+character.SceneDisplay.prototype.Load = function(scene) {
+	if(scene.background != null) {
+		if(scene.background.image != null) {
+			this.background.SetAnimation(scene.background.image);
+			this.background.CSS("z-index","850");
+		}
+	} else this.background.Hide();
+	if(scene.foreground != null) {
+		var _g1 = 0, _g = this.characters.length;
+		while(_g1 < _g) {
+			var k = _g1++;
+			this.characters[k].Remove();
+		}
+		this.characters = [];
+		if(scene.foreground.images != null) {
+			var _g1 = 0, _g = scene.foreground.images.length;
+			while(_g1 < _g) {
+				var k = _g1++;
+				this.characters.push(new character.CharacterDisplay());
+				this.characters[k].SetAnimation(scene.foreground.images[k]);
+				this.characters[k].Position(scene.foreground.positions[k]);
+				this.characters[k].Size(scene.foreground.sizes[k]);
+				this.characters[k].CSS("z-index",850 + k + "");
+				this.characters[k].Hide();
+			}
+		}
+	}
+}
+character.SceneDisplay.prototype.__class__ = character.SceneDisplay;
 character.DialogueBox = function(p) {
 	if( p === $_ ) return;
 	main.Tile.call(this);
 	this.chats = [];
+	this.speakers = [];
 	this.speaker = new main.Tile();
 	this.CSS("width","80%");
 	this.CSS("height","35%");
@@ -658,6 +791,7 @@ character.DialogueBox.__name__ = ["character","DialogueBox"];
 character.DialogueBox.__super__ = main.Tile;
 for(var k in main.Tile.prototype ) character.DialogueBox.prototype[k] = main.Tile.prototype[k];
 character.DialogueBox.prototype.chats = null;
+character.DialogueBox.prototype.speakers = null;
 character.DialogueBox.prototype.speaker = null;
 character.DialogueBox.prototype.Hide = function(cb) {
 	main.Tile.prototype.Hide.call(this,cb);
@@ -671,10 +805,19 @@ character.DialogueBox.prototype.Remove = function() {
 	main.Tile.prototype.Remove.call(this);
 	this.speaker.Remove();
 }
-character.DialogueBox.prototype.Chat = function(chat,speaker) {
-	this.chats.push(chat);
-	this.HTML("<p></p><p id=\"visual-novel-dialogue\">" + chat + "</p>");
-	if(speaker != null) this.speaker.HTML(speaker);
+character.DialogueBox.prototype.Load = function(scenes) {
+	this.chats = [];
+	this.speakers = [];
+	var _g1 = 0, _g = scenes.length;
+	while(_g1 < _g) {
+		var k = _g1++;
+		this.chats.push(scenes[k].text.content);
+		this.speakers.push(scenes[k].text.speaker);
+	}
+}
+character.DialogueBox.prototype.Chat = function(num) {
+	this.HTML("<p></p><p id=\"visual-novel-dialogue\">" + this.chats[num] + "</p>");
+	this.speaker.HTML(this.speakers[num]);
 }
 character.DialogueBox.prototype.Purge = function() {
 }
@@ -708,6 +851,16 @@ js.Boot.__init();
 	Math.isNaN = function(i) {
 		return isNaN(i);
 	};
+}
+{
+	js.Lib.document = document;
+	js.Lib.window = window;
+	onerror = function(msg,url,line) {
+		var f = js.Lib.onerror;
+		if( f == null )
+			return false;
+		return f(msg,[url+":"+line]);
+	}
 }
 {
 	var d = Date;
@@ -752,16 +905,6 @@ js.Boot.__init();
 	};
 	d.prototype.__class__ = d;
 	d.__name__ = ["Date"];
-}
-{
-	js.Lib.document = document;
-	js.Lib.window = window;
-	onerror = function(msg,url,line) {
-		var f = js.Lib.onerror;
-		if( f == null )
-			return false;
-		return f(msg,[url+":"+line]);
-	}
 }
 {
 	/*!
