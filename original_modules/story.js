@@ -15,8 +15,13 @@ var ObjectId = Schema.ObjectId;
 // The one and only schematic that ships with the server
 var StorySchema = new Schema( { 
 	id : ObjectId ,
-	owner_id : String ,
-	scene : Scene
+	name : String ,
+	category : String ,
+	cover : String ,
+	owner : String ,
+	collaborators : [String] ,
+	scene : String ,
+	data : {}
 } ); // end Schema
 
 // returns the 

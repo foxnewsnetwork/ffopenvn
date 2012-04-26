@@ -1,9 +1,8 @@
-script(type="text/javascript", src="javascripts/stories/show.js")
-.navbar 
-	.navbar-fixed-top
-		.navbar-inner
-			.container
-				a.brand #{title}				
+script(type="text/javascript", src="/javascripts/stories/show.js")
 .container
 	.hero-unit
-		
+		#story
+			h1 #{story.name}
+			p TODO: replace this with something cool
+		button.btn.btn-primary.large Begin
+		a.btn.btn-primary.large(href="../stories/#{story._id}/edit" ) Edit

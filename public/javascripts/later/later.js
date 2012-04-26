@@ -2,17 +2,18 @@
 * Socket.IO communication Package-ClientSide
 */
 var socket = io.connect('http://localhost:3000');
-socket.on( "connection", function(id){ 
-	sessionId = id;
-
-});
 
 /**
 * Admin
 */
-var thoughts = function(){
+var later = function(){
 	var adminFunctionHandlers = {};
 	var ujsFunctionHandlers = {};
+	var httpFunctionHandlers = {};
+	socket.on( "connection", function(id) { 
+		var url = document.URL;
+		socket.emit("get up", { url : url } )
+	} ); // end on connection
 	socket.on( "ujs event down" , function(packet){
 		var name = packet['name'];
 		var data = packet['data'];

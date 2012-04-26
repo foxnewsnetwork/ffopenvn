@@ -226,26 +226,28 @@ var demodata = [
 
 var CURRENT_SCENE = 0;
 $(document).ready( function(){
-	$(".hero-unit").hide();
-	var demovn = new FFOpenVN();
-	demovn.Load( demodata );
-	demovn.Scene( CURRENT_SCENE );
-	if( CURRENT_SCENE == demodata.length - 3 ) { 
-		$(".hero-unit").show();	
-	} // end if
-	demovn.Click( function(){ 
-		demovn.Next();
-		CURRENT_SCENE++;
+	$("#playdemo").click( function(){ 
+		$(".hero-unit").hide();
+		var demovn = new FFOpenVN();
+		demovn.Load( demodata );
+		demovn.Scene( CURRENT_SCENE );
 		if( CURRENT_SCENE == demodata.length - 3 ) { 
 			$(".hero-unit").show();	
 		} // end if
-	} ); // end Click
-	demovn.End( function(){  
-		CURRENT_SCENE = 0;
-		demovn.Scene( CURRENT_SCENE );
-	} ); // end End
-	$("a").mouseover(tooltip.show("Feature not ready yet!"));
-	$("a").mouseleave(tooltip.hide());
+		demovn.Click( function(){ 
+			demovn.Next();
+			CURRENT_SCENE++;
+			if( CURRENT_SCENE == demodata.length - 3 ) { 
+				$(".hero-unit").show();	
+			} // end if
+		} ); // end Click
+		demovn.End( function(){  
+			CURRENT_SCENE = 0;
+			demovn.Scene( CURRENT_SCENE );
+		} ); // end End
+		$("a").mouseover(tooltip.show("Feature not ready yet!"));
+		$("a").mouseleave(tooltip.hide());
+	} ); // end playdemo.click
 } ); // end ready
 
 socket.on( "connection", function(id) { 

@@ -1,10 +1,8 @@
-script(type="text/javascript", src="socket.io/socket.io.js" )
-script(type="text/javascript", src="javascripts/thoughts/thoughts.js")
-script(type="text/javascript", src="javascripts/flotile/tooltip.js")
 script(type="text/javascript", src="javascripts/flotile/flotile.js")
 script(type="text/javascript", src="javascripts/flotile/flotile-bridge.js")
 script(type="text/javascript", src="javascripts/pages/demo.js")
-link(href="/stylesheets/extensions.css", media="screen", rel="stylesheet", type="text/css")
+script(type='text/javascript")
+		CURRENT_SCENE = #{count};
 style(type="text/css)
 	div#thx4{ 
 		width : 100%;
@@ -29,17 +27,6 @@ style(type="text/css)
 		word-spacing : 0.2em;
 		text-shadow : 1px 1px rgb(215, 234, 105);
 	}
-script(type='text/javascript")
-	CURRENT_SCENE = #{count};
-	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-31007838-1']);
-	_gaq.push(['_trackPageview']);
-
-	(function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	})();
 
 .navbar 
 	.navbar-fixed-top
@@ -51,10 +38,11 @@ script(type='text/javascript")
 		h1 #{title}
 		p Welcome back. Pardon the lack of dust, we're too early to have built up any.
 		p
-			a.btn.same(href="#") Fan Fiction
-			a.btn.same(href="#") Original
-			a.btn.btn-primary.same(href="#") New Story
+			a.btn.same(href="/stories?cat=0") Fan Fiction
+			a.btn.same(href="/stories?cat=1") Original
+			a.btn.same(href="/stories/new") New Story
 		p	
+			button#playdemo.btn.btn-primary.same Play Demo
 			#signupbox
 				input#email(placeholder="example@me.com")
 				button#signup.btn.btn-primary.large Signup!

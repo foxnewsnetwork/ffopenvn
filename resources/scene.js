@@ -1,3 +1,5 @@
+
+
 this.new = function(req, res){ 
 	res.render("scenes/new.jade");
 }; // end new

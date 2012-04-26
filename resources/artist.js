@@ -1,3 +1,4 @@
+
 this.new = function(req, res){ 
 	res.render("artists/new.jade" );
 }; // end new

@@ -1,8 +1,33 @@
-.navbar 
-	.navbar-fixed-top
-		.navbar-inner
-			.container
-				a.brand #{title}				
+script(type="text/javascript", src="javascripts/stories/index.js")
+style(type='text/css')
+	#story{ 
+		height : 150px;
+		width : 150px;
+		border : solid 0.2em blue;
+		margin-bottom : 1em;
+	}
+	h4.story-name{ 
+		width : 100%; 
+		height : 1.5em;
+		background-color : rgb( 215, 220, 230 );
+		opacity : 0.75;
+	}
+	.story-tile{
+		width : 150px;
+		height : 150px;
+		background-size : 100% 100%;
+	}
 .container
 	.hero-unit
+		h1 Index
+		p #{stories}
+	.row
+		if stories
+			- for ( var k in stories ) 	
+				.span4 
+					#story
+						a(href="/stories/#{stories[k]._id}")	
+							.story-tile(style="background-image: url( '#{stories[k].cover}' );")
+								h4.story-name #{stories[k].name}
+			
 		

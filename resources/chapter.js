@@ -1,3 +1,4 @@
+
 this.new = function(req, res){ 
 	res.render("chapters/new.jade");
 }; // end new

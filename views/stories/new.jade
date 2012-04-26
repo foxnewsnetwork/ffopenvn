@@ -1,8 +1,27 @@
-.navbar 
-	.navbar-fixed-top
-		.navbar-inner
-			.container
-				a.brand #{title}				
+style(type="text/css")
+	ul.newstory{ 
+		list-style : none;
+	}
 .container
 	.hero-unit
-		
+		h1 New Story
+		form#newstory(action="/stories", method="post")
+			ul.newstory
+				li.newstory 
+					p Title
+					input#title(name="story[title]", type="text")
+				li.newstory 
+					p Category
+					input#catff.radio.btn(type="radio", name="story[category]", value="0") 
+					text Fan-Fiction
+					br
+					input#cato.radio.btn(type="radio", name="story[category]", value="1") 
+					text Original
+				li.newstory 
+					p Parent Work (if fan-fiction)
+					input#parentwork(name="story[parent]", type="text")
+				li.newstory 
+					p Cover Page (please host your images elsewhere for now)
+					input#cover(name="story[cover]", type="text")
+				li.newstory
+					input.btn.btn-primary.large(type="submit") Go!

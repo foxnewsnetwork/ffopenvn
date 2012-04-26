@@ -8,12 +8,6 @@ var express = require('express')
 var Resource = require('express-resource');
 var app = module.exports = express.createServer();
 
-// Custom thoughts
-var thoughts = require( "./original_modules/thoughts.js" ); 
-thoughts.initialize( app );
-
-// Configuration
-
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -39,17 +33,17 @@ app.get( '/', function(req, res){
 	res.render("pages/index.jade", { title : "FFOpenVN * alpha", count : 0 } );
 } ); //end get
 
-app.get( '/:id', function(req, res){ 
+app.get( '/demo/:id', function(req, res){ 
 	res.render("pages/index.jade", { title : "FFOpenVN * alpha", count : req.params['id'] } );
 } ); //end get
 
 /**
 * Resources
 */
-app.resource( "artists", require("./resources/artist.js") );
+// app.resource( "artists", require("./resources/artist.js") );
 app.resource( "stories", require("./resources/story.js") );
-app.resource( "chapters", require("./resources/chapter.js") );
-app.resource( "scenes", require("./resources/scene.js") );
+// app.resource( "chapters", require("./resources/chapter.js") );
+// app.resource( "scenes", require("./resources/scene.js") );
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
