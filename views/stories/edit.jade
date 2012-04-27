@@ -1,8 +1,69 @@
-.navbar 
-	.navbar-fixed-top
-		.navbar-inner
-			.container
-				a.brand #{title}				
+style(type="text/css")
+	ul.newstory{ 
+		list-style : none;
+	}
+	li.newstory{ 
+		width : 100%;
+	}
+	.meta-story{ 
+		background-color : rgb(243, 235, 255);
+		opacity : 0.85;
+		padding : 1em;
+	}
+script(type="text/javascript", src="/javascripts/stories/edit.js")
 .container
 	.hero-unit
+		h1 #{story.title} *
+		p Manage story basics		
+		p
+			a.btn.btn-primary.large(href="/chapter?sid=#{story._id}") Chapter Editor
+	.row 
+		.span6
+			.meta-story
+				h2 Story Basics
+				form#story( action="/story/#{story._id}", method="put" )
+					ul.newstory
+						li.newstory 
+							h4 Title
+							input#title(name="story[title]", type="text", value="#{story.title}")
+						li.newstory 
+							h4 Category
+							- if (story.category == "Original")
+								input#catff.radio.btn(type="radio", name="story[category]", value="0")
+							- else
+								input#catff.radio.btn(type="radio", name="story[category]", value="0", checked="checked")
+							text Fan-Fiction
+							br
+							- if (story.category == "Original")
+								input#cato.radio.btn(type="radio", name="story[category]", value="1", checked="checked")
+							- else
+								input#cato.radio.btn(type="radio", name="story[category]", value="1")
+							text Original
+						li.newstory 
+							h4 Parent Work (if fan-fiction)
+							input#parentwork(name="story[parent]", type="text", value="#{story.category}")
+						li.newstory 
+							h4 Cover Page (please host your images elsewhere for now)
+						li.newstory 
+							img( alt="cover page image", src="#{story.cover}", style="width : 150px; height : 150px" )
+						li.newstory 
+							input#cover(name="story[cover]", type="text", value="#{story.category}")
+						li.newstory
+							h4 Summary
+						li.newstory
+							textarea#cover(name="story[summary]", type="text", value="#{story.summary}", rows="5", cols="40")							
+						li.newstory
+							input.btn.btn-primary.large(type="submit", value="Modify") 
+		.span6
+			.meta-story
+				h2 Collaborators
+				p
+					input#ppl(type="text")
+				p
+					button#addppl.btn.btn-primary Add Collaborator
+				ul
+					- for (var k in story.collaborators.length)
+						li= story.collaborators[k]
+					
+		#chapter-tree
 		

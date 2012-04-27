@@ -18,7 +18,7 @@ this.create = function(req, res){
 	console.log("Create request received in Story: " );
 	console.log( params );
 	var story = new Story( {
-		name : params.title,
+		title : params.title,
 		cover : params.cover ,
 		category : params.parent == "0" ? params.parent : "Original"
 	} ); // end Story
@@ -30,19 +30,24 @@ this.create = function(req, res){
 		} // end if
 		else {	
 			console.log("Save successful @ " + story._id);
-			res.redirect("/stories/" + story._id );
+			res.redirect("/story/" + story._id );
 		} // end else
 	} ); // end save
 }; // end create
 
 this.edit = function(req, res){ 
-	res.render("stories/edit.jade");
+	var params = req.params;
+	Story.findOne( { _id : params.story }, function(err,obj){ 
+		res.render("stories/edit.jade", { title : "FFOpenVN", story : obj } );
+	} ); // end findOne
 }; // end edit
 
 this.show = function(req, res){ 
 	var params = req.params;
 	var ip = req.connection.remoteAddress;
-	Story.findOne( { _id : params.stories }, function(err,obj){ 
+	Story.findOne( { _id : params.story }, function(err,obj){ 
+		console.log( "Story Show called against " + params.story + " , found object: " );
+		console.log( params );
 		res.render("stories/show.jade", { title : "FFOpenVN", story : obj } );	
 	} ); // end findOne
 }; // end show

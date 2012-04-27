@@ -1,8 +1,20 @@
-.navbar 
-	.navbar-fixed-top
-		.navbar-inner
-			.container
-				a.brand #{title}				
+script(type="text/javascript", src="/socket.io/socket.io.js")
+script(type="text/javascript", src="/javascripts/chapters/index.js")
+style(type="text/css")
+	
 .container
 	.hero-unit
+		#storyname 
+			h1 Loading Story...
+			input#sid(value="#{sid}", type="text")
+		p Chapter View
+		p This page should only be accessible to its staff
+	.row
+		.span10
+			#treeview
+				h3 Hey buddy, turn on javascript
+				p At least for "/javascripts/chapters/index.js" and jquery seriously. 
+				p "Why?" you ask, well because the JSON packet from the server isn't ordered but should be
+				p So we have to sort it here
+		
 		

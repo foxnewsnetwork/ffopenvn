@@ -8,6 +8,12 @@ var express = require('express')
 var Resource = require('express-resource');
 var app = module.exports = express.createServer();
 
+// suckit.IO for RESTful socket.IO usage
+var suck = require("./original_modules/suckitio.js").listen(app);
+
+/**
+* Server Configuration
+*/
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -40,10 +46,12 @@ app.get( '/demo/:id', function(req, res){
 /**
 * Resources
 */
-// app.resource( "artists", require("./resources/artist.js") );
-app.resource( "stories", require("./resources/story.js") );
-// app.resource( "chapters", require("./resources/chapter.js") );
-// app.resource( "scenes", require("./resources/scene.js") );
+// app.resource( "artist", require("./resources/artist.js") );
+app.resource( "story", require("./resources/story.js") );
+app.resource( "chapter", require("./resources/chapter.js") );
+// app.resource( "scene", require("./resources/scene.js") );
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+
+

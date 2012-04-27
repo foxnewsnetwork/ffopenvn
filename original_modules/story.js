@@ -2,8 +2,9 @@
 var mongoose = require("mongoose");
 mongoose.connect('mongodb://localhost/my_ffopenvn_database');
 
-var sceneSchema = require("./scene.js");
-var Scene = sceneSchema.Scene;
+var chapterType = require("./chapter.js");
+var Chapter = chapterType.Chapter;
+var ChapterSchema = chapterType.ChapterSchema;
 
 /****************************
 * MongoDB Configuration           *
@@ -15,18 +16,20 @@ var ObjectId = Schema.ObjectId;
 // The one and only schematic that ships with the server
 var StorySchema = new Schema( { 
 	id : ObjectId ,
-	name : String ,
+	title : String ,
 	category : String ,
 	cover : String ,
 	owner : String ,
 	collaborators : [String] ,
-	scene : String ,
+	start : String ,
+	chapters : {} ,
 	data : {}
 } ); // end Schema
+// chapters are also stored in a linked hash
 
-// returns the 
-StorySchema.methods.start = function(){ 
-	return this.scene;
+// returns the first chapter 
+StorySchema.methods.first = function(){ 
+	return this.chapters[this.start];
 }; // end start
 
 // Defining the model

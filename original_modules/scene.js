@@ -17,9 +17,9 @@ var ObjectId = Schema.ObjectId;
 * miscellanious stuff coming soon
 * } 
 */
-var SceneSchema = new Schema( { 
+this.SceneSchema = new Schema( { 
 	id : ObjectId ,
-	story_id : String ,
+	chapter_id : String ,
 	title : String ,
 	parent : String ,
 	children : [String] ,
@@ -29,7 +29,7 @@ var SceneSchema = new Schema( {
 // except for leaf scenes, all scenes also have children scenes
 
 // choice is a integer and always defaults to 0
-SceneSchema.methods.next = function(callback, choice){ 
+this.SceneSchema.methods.next = function(callback, choice){ 
 	if( callback == undefined ){ 
 		return;
 	} // end if
@@ -46,7 +46,7 @@ SceneSchema.methods.next = function(callback, choice){
 	} ); // end find
 }; // end next
 
-SceneSchema.methods.previous = function(callback){ 
+this.SceneSchema.methods.previous = function(callback){ 
 	if( callback == undefined ){ 
 		return;
 	} // end if
@@ -62,7 +62,7 @@ SceneSchema.methods.previous = function(callback){
 	} ); //end findOne
 }; // end previous
 
-SceneSchema.methods.new = function(data){ 
+this.SceneSchema.methods.new = function(data){ 
 	var sm = mongoose.model( "SceneModel" );
 	var scene = new sm({ 
 		title : "Untitled" ,
@@ -79,7 +79,7 @@ SceneSchema.methods.new = function(data){
 	return scene;
 }; // returns a new scene
 
-SceneSchema.pre( 'remove', function(next){
+this.SceneSchema.pre( 'remove', function(next){
 	// Step 1: updates the children
 	if( this.children != undefined ){ 
 		// TODO: write me
@@ -92,6 +92,6 @@ SceneSchema.pre( 'remove', function(next){
 } ); //end pre
 
 // Defining the model
-mongoose.model( "SceneModel", SceneSchema );
+mongoose.model( "SceneModel", this.SceneSchema );
 this.Scene = mongoose.model( "SceneModel" ); 
 

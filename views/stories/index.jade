@@ -26,7 +26,7 @@ style(type='text/css')
 			- for ( var k in stories ) 	
 				.span4 
 					#story
-						a(href="/stories/#{stories[k]._id}")	
+						a(href="/story/#{stories[k]._id}")	
 							.story-tile(style="background-image: url( '#{stories[k].cover}' );")
 								h4.story-name #{stories[k].name}
 			
