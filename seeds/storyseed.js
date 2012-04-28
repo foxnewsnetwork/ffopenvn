@@ -1,8 +1,10 @@
 /**
-* Demo File
+* Modules
 */
-// var PIC_REPO = "http://i299.photobucket.com/albums/mm281/foxnewsnetwork/";
-var PIC_REPO = "/images/demo/"
+var Story = require("../original_modules/story.js").Story;
+var Chapter = require("../original_modules/chapter.js").Chapter;
+var Scene = require("../original_modules/scene.js").Scene;
+var PIC_REPO = "/images/demo/";
 var demodata = [
 	{
 		'background' : { 
@@ -224,49 +226,46 @@ var demodata = [
 	} // end step 14
 ]; // end demodata
 
-var CURRENT_SCENE = 0;
-$(document).ready( function(){
-	$("#playdemo").click( function(){ 
-		$(".hero-unit").hide();
-		var demovn = new FFOpenVN();
-		demovn.Load( demodata );
-		demovn.Scene( CURRENT_SCENE );
-		if( CURRENT_SCENE == demodata.length - 3 ) { 
-			$(".hero-unit").show();	
-		} // end if
-		demovn.Click( function(){ 
-			demovn.Next();
-			CURRENT_SCENE++;
-			if( CURRENT_SCENE == demodata.length - 3 ) { 
-				$(".hero-unit").show();	
-			} // end if
-		} ); // end Click
-		demovn.End( function(){  
-			CURRENT_SCENE = 0;
-			demovn.Scene( CURRENT_SCENE );
-		} ); // end End
-		$("a").mouseover(tooltip.show("Feature not ready yet!"));
-		$("a").mouseleave(tooltip.hide());
-	} ); // end playdemo.click
-} ); // end ready
+require("./purge.js" );
 
-socket.on( "connection", function(id) { 
-	$("#signup").click(function(){
-		var email = $("#email").val();
-		var regemail = /^[a-zA-Z0-9\-_.,%]{2,}@[a-zA-Z0-9\-_%,]{2,}\.[a-zA-Z0-9]{2,}$/;
-		if (regemail.test(email)) { 
-			var data = { 
-			email : email
-			}; // end data
-			thoughts.FireAdmin( "data up", data );
-		} // end if
-		else { 
-			$("#email").css("border", "2px solid red");
-		} // end else
-		
-	} ); // end click
-	
-	thoughts.AddAdmin( "data down", function(result) { 
-		$("#signupbox").html("<div id='thx4'><h3>Thanks for signing up!</h3></div>");
-	} ); // end AddAdmin
-} ); // end on
+var demostory = new Story( { 
+	title : "FFOpenVN Demo # 1" ,
+	category : "Original" ,
+	cover : "/images/upa.png" ,
+	owner : "FFOpenVN"
+} ); // end demostory
+
+demostory.save( ); // end save
+
+Story.findOne({ _id : demostory._id }, function(err,obj) { 
+	var story = obj
+	Chapter.findOne( story.first(), function(err, obj){ 
+		var ch1 = obj;
+		Scene.findOne( ch1.first(), function(err, obj) { 
+			var sroot = obj;
+			/*
+			Scene.update( sroot, { $set : { data : demodata[0] } }, { multi : true }, function(err, num) { 
+				console.log( "number of fields affected: " + num );
+				Scene.findOne( { _id : sroot._id }, function(err,obj){ console.log(obj); } );
+			} ); // end update
+			*/
+			
+			sroot.data = demodata[0];
+			sroot.title = "Scene Root";
+			sroot.save(function(err){ 
+				Scene.findOne( { _id : sroot._id }, function(err,obj) { 
+					var snext = obj;
+					for ( var k = 1; k < demodata.length; k++ ) { 
+						snext = snext.new( demodata[k] );
+						snext.save( (function(j){ 
+							console.log( "Level " + j + " finished saving" );
+						} )(k) ); // end save
+					} //end for
+					console.log(obj); 
+				} ); // end findone
+			} ); // end save
+			
+			
+		} ); //end scene findone
+	} ); // end chapter find
+} ); // end findOne

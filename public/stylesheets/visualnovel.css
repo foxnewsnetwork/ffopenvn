@@ -1,0 +1,24 @@
+div#thx4{ 
+	width : 100%;
+	height : 5em;
+	text-align : center;
+	background-color : rgb( 213, 200, 127 );
+	border : 3px solid yellow;
+	border-radius : 1em;
+	-moz-border-radius : 1em;
+}
+a.same{ 
+	width : 10em;
+	margin-left: 1em;
+}
+p#visual-novel-dialogue{ 
+	font-size : 1.5em;
+	text-align : center;
+	font-family : "Verdana";
+	font-weight : 900;
+	color : rgb(115, 35, 20);
+	opacity : 1;
+	word-spacing : 0.2em;
+	text-shadow : 1px 1px rgb(215, 234, 105);
+}
+

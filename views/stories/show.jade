@@ -1,9 +1,14 @@
-
 script(type="text/javascript", src="/javascripts/stories/show.js")
+style(type="text/css")
+	.invisible-stuff{ 
+		visibility : hidden;
+		opacity : 0;
+	}
 .container
 	.hero-unit
 		#story
 			h1 #{story.title}
 			p TODO: replace this with something cool
-		button.btn.btn-primary.large Begin
+		button#startnovel.btn.btn-primary.large Begin
 		a.btn.btn-primary.large(href="../story/#{story._id}/edit" ) Edit
+		input#storyid.invisible-stuff( value="#{story._id}" )

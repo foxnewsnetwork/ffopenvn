@@ -5,10 +5,15 @@ html
 	link(rel='stylesheet', href='/stylesheets/style.css')
 	link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
 	link(href="/stylesheets/extensions.css", media="screen", rel="stylesheet", type="text/css")
+	link(href="/stylesheets/visualnovel.css", media="screen", rel="stylesheet", type="text/css")	
 	script(type="text/javascript", src="/javascripts/jquery/jquery.js")
 	script(type="text/javascript", src="/bootstrap/js/bootstrap.js")
+	script(type="text/javascript", src="/socket.io/socket.io.js")
 	script(type="text/javascript", src="/javascripts/flotile/tooltip.js")
+	script(type="text/javascript", src="/javascripts/flotile/flotile.js")
+	script(type="text/javascript", src="/javascripts/flotile/flotile-bridge.js")
 	script(type='text/javascript")
+		var socket = io.connect('http://localhost:3000');
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-31007838-1']);
 		_gaq.push(['_trackPageview']);

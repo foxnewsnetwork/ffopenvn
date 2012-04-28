@@ -1,4 +1,3 @@
-var socket = io.connect('http://localhost:3000');
 socket.on( "connection", function(id) { 
 	var data = { sid : $("#sid").val() };
 	socket.emit( "chapter index connection" , data );		
