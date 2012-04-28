@@ -8,7 +8,7 @@ var Story = storySchema.Story;
 * Controller section
 */
 this.new = function(req, res){ 
-	res.render("stories/new.jade", { title : "FFOpenVN"} );
+	res.render("stories/new.jade", { title : "FFOpenVN", player : req.session.user } );
 }; // end new
 
 this.destroy = function(req, res){ }; // end destroy
@@ -38,7 +38,7 @@ this.create = function(req, res){
 this.edit = function(req, res){ 
 	var params = req.params;
 	Story.findOne( { _id : params.story }, function(err,obj){ 
-		res.render("stories/edit.jade", { title : "FFOpenVN", story : obj } );
+		res.render("stories/edit.jade", { title : "FFOpenVN", story : obj, player : req.session.user } );
 	} ); // end findOne
 }; // end edit
 
@@ -48,7 +48,7 @@ this.show = function(req, res){
 	Story.findOne( { _id : params.story }, function(err,obj){ 
 		console.log( "Story Show called against " + params.story + " , found object: " );
 		console.log( params );
-		res.render("stories/show.jade", { title : "FFOpenVN", story : obj } );	
+		res.render("stories/show.jade", { title : "FFOpenVN", story : obj, player : req.session.user } );	
 	} ); // end findOne
 }; // end show
 
@@ -57,7 +57,7 @@ this.index = function(req, res){
 	var ip = req.connection.remoteAddress;
 	console.log( "in resource index " + ip );
 	Story.find({}, function(err, obj){ 
-		res.render( "stories/index.jade", { title : "FFOpenVN Index", stories : obj } );
+		res.render( "stories/index.jade", { title : "FFOpenVN Index", stories : obj, player : req.session.user } );
 	} ); // end find
 }; // end index
 

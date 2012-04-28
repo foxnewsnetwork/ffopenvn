@@ -30,11 +30,49 @@ html
 					.container
 						a.brand(href="/") #{title}				
 						ul.nav
-							li.active
-								a(href="#") Continue
+							- if (player )
+								li.active
+									a(href="#") Continue
 							li
 								a(href="#") Feedback
 							li
 								a(href="#") Quit
+							- if (player)
+								li
+									a#signout(href="#") Sign Out
+							- else
+								li#signinmenu.dropdown
+									a#signin.dropdown-toggle(href="#signinmenu", data-toggle="dropdown") Sign In
+										b.caret
+									ul.dropdown-menu.dropdown-form
+										form.signin( action="/user/login", method="post" )
+											li
+												input(type="text", placeholder="Email", name="user[email]")
+											li 
+												input(type="password", placeholder="Password", name="user[password]")
+											li
+												input(type="submit", value="Sign In")
+										
+											
+								li#signupmenu.dropdown
+									a#signup.dropdown-toggle(href="#signupmenu", data-toggle="dropdown") Sign Up
+										b.caret
+									ul.dropdown-menu.signup-form
+										form.signup( action="/user", method="post" )
+											li
+												h3 Email
+											li
+												input(type="text", placeholder="foxnewsnetwork@gmail.com", name="user[email]")
+											li
+												h3 Username
+											li
+												input(type="text", placeholder="xXx_-_SSJVegeta-_-xXx", name="user[name]")
+											li 
+												h3 Password
+											li
+												input(type="password", placeholder="Password", name="user[password]")
+											li
+												input(type="submit", value="Sign In")
+										
 
 		!= body
