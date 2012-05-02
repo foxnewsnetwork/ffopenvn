@@ -5,8 +5,9 @@ socket.on( "connection", function(id) {
 	} ); // end startnovel
 } ); // end connection
 
-socket.on( "story show connection", function(scenes) { 
+socket.on( "story show connection", function(rawdata) { 
 	var myvn = new FFOpenVN();
+	var scenes = TreeSort(rawdata);
 	var data = [];
 	for ( var k = 0; k < scenes.length; k++ ) { 
 		data.push( scenes[k]['data'] );

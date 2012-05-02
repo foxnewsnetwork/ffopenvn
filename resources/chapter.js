@@ -12,7 +12,8 @@ this.new = function(req, res){
 this.destroy = function(req, res){ }; // end destroy
 this.create = function(req, res){ }; // end create
 this.edit = function(req, res){ 
-	
+	var sid = req.params.sid;
+	res.render( "chapters/edit.jade", { title : "FFOpenVN", player : req.session.user , sid : sid } );
 }; // end edit
 this.show = function(req, res){ 
 	

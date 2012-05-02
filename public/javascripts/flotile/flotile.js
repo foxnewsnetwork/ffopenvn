@@ -1,5 +1,900 @@
 $estr = function() { return js.Boot.__string_rec(this,''); }
+if(typeof main=='undefined') main = {}
+main.Element = function(p) {
+	if( p === $_ ) return;
+	this.hides = [];
+	this.shows = [];
+	this.position = { x : 0.0, y : 0.0};
+	this.size = { width : 75.0, height : 75.0};
+	this.domBody = new js.JQuery("body");
+	this.parent = this.domBody;
+	this.domBody.append("<div id='" + main.Element.NAME + "-" + main.Element.ID + "'></div>");
+	this.domContainer = new js.JQuery("#" + main.Element.NAME + "-" + main.Element.ID);
+	main.Element.ID += 1;
+	this.CSS("z-index","967");
+	this.CSS("position","absolute");
+	js.Lib.window.onresize = (function(el) {
+		return function(e) {
+			el.Track();
+		};
+	})(this);
+}
+main.Element.__name__ = ["main","Element"];
+main.Element.prototype.domContainer = null;
+main.Element.prototype.domBody = null;
+main.Element.prototype.position = null;
+main.Element.prototype.size = null;
+main.Element.prototype.hides = null;
+main.Element.prototype.shows = null;
+main.Element.prototype.parent = null;
+main.Element.prototype.timer = null;
+main.Element.prototype.bgcolor = null;
+main.Element.prototype.Highlight = function(color) {
+	this.CSS("background-color",color);
+	this.CSS("opacity","0.65");
+}
+main.Element.prototype.Lowlight = function() {
+	this.domContainer.css("background-color","none");
+	this.CSS("opacity","1");
+}
+main.Element.prototype.Track = function() {
+	if(this.parent.length < 1) {
+		this.Remove();
+		return;
+	}
+	if(this.parent.attr("visibility") == "hidden") this.Hide();
+	this.Position(this.position);
+	var scale = this.parent.attr("-moz-transform");
+	if(scale != "") this.CSS("-moz-transform",scale);
+}
+main.Element.prototype.Parent = function(parent) {
+	if(parent == null) return this.parent; else {
+		if(this.parent.length == 0) this.parent = this.domBody;
+		return this.parent;
+	}
+}
+main.Element.prototype.Position = function(pos) {
+	main.Element.TestCounter++;
+	if(pos == null) return this.position;
+	this.position = pos;
+	var offset = { top : this.parent.innerHeight(), left : this.parent.innerWidth()};
+	var x = this.position.x;
+	var y = this.position.y;
+	this.domContainer.css("left",x + "%");
+	this.domContainer.css("top",y + "%");
+	return this.position;
+}
+main.Element.prototype.Size = function(siz) {
+	if(siz == null) return this.size;
+	this.size = siz;
+	this.domContainer.css("width",this.size.width + "%");
+	this.domContainer.css("height",this.size.height + "%");
+	this.domContainer.css("background-size","100% 100%");
+	return this.size;
+}
+main.Element.prototype.Remove = function() {
+	this.Hide();
+	this.domContainer.remove();
+}
+main.Element.prototype.Hide = function(cb) {
+	if(cb == null) this.domContainer.hide(500,(function(element) {
+		return function() {
+			var _g1 = 0, _g = element.hides.length;
+			while(_g1 < _g) {
+				var k = _g1++;
+				element.hides[k]();
+			}
+		};
+	})(this)); else this.hides.push(cb);
+}
+main.Element.prototype.Show = function(cb) {
+	if(cb == null) this.domContainer.show(250,(function(element) {
+		return function() {
+			var _g1 = 0, _g = element.shows.length;
+			while(_g1 < _g) {
+				var k = _g1++;
+				element.shows[k]();
+			}
+		};
+	})(this)); else this.shows.push(cb);
+}
+main.Element.prototype.CSS = function(prop,value) {
+	this.domContainer.css(prop,value);
+	if(prop == "background-color") this.bgcolor = value;
+}
+main.Element.prototype.HTML = function(html) {
+	if(html == null) return this.domContainer.html();
+	this.domContainer.html(html);
+	return html;
+}
+main.Element.prototype.__class__ = main.Element;
+main.Statistics = function() { }
+main.Statistics.__name__ = ["main","Statistics"];
+main.Statistics.prototype.stats = null;
+main.Statistics.prototype.Stats = null;
+main.Statistics.prototype.ClearStats = null;
+main.Statistics.prototype.__class__ = main.Statistics;
+main.Tile = function(p) {
+	if( p === $_ ) return;
+	this.ClearStats();
+	this.clicks = [];
+	this.mouseovers = [];
+	this.mouseleaves = [];
+	main.Element.call(this);
+	this.CSS("z-index","968");
+}
+main.Tile.__name__ = ["main","Tile"];
+main.Tile.__super__ = main.Element;
+for(var k in main.Element.prototype ) main.Tile.prototype[k] = main.Element.prototype[k];
+main.Tile.prototype.image = null;
+main.Tile.prototype.clicks = null;
+main.Tile.prototype.mouseovers = null;
+main.Tile.prototype.mouseleaves = null;
+main.Tile.prototype.stats = null;
+main.Tile.prototype.EnterEditMode = function(positioncb,sizecb) {
+	var me = this;
+	this.Mouseover(function(e) {
+		me.CSS("border","2px solid blue");
+	});
+	this.Mouseleave(function(e) {
+		me.CSS("border","none");
+	});
+	var mousedownflag = false, xdiff = 0.0, ydiff = 0.0;
+	this.domContainer.mousedown(function(e) {
+		mousedownflag = true;
+		var body = me.domBody;
+		var mx = 100 * e.pageX / body.width();
+		var my = 100 * e.pageY / body.height();
+		xdiff = mx - me.position.x;
+		ydiff = my - me.position.y;
+	});
+	this.domContainer.mousemove(function(e) {
+		if(mousedownflag) {
+			var dx = xdiff, dy = ydiff;
+			var document = me.domBody;
+			var mouseX = 100 * e.pageX / document.width();
+			var mouseY = 100 * e.pageY / document.height();
+			me.Position({ x : mouseX - dx, y : mouseY - dy});
+		}
+		return;
+	});
+	this.domContainer.mouseup(function(e) {
+		positioncb(me.Position());
+		mousedownflag = false;
+	});
+}
+main.Tile.prototype.Stats = function() {
+	return this.stats;
+}
+main.Tile.prototype.ClearStats = function() {
+	var tempstats = this.stats;
+	this.stats = { mouseover : [], duration : [], click : []};
+	return tempstats;
+}
+main.Tile.prototype.SetAnimation = function(image) {
+	if(image == null) return this.image; else if(this.image == image) return this.image;
+	this.image = image;
+	this.CSS("background-image","url('" + image + "')");
+	return this.image;
+}
+main.Tile.prototype.Click = function(cb) {
+	if(cb == null) {
+		var _g1 = 0, _g = this.clicks.length;
+		while(_g1 < _g) {
+			var k = _g1++;
+			this.clicks[k](null);
+			this.stats.click.push(haxe.Timer.stamp());
+		}
+	} else {
+		this.clicks.push(cb);
+		this.domContainer.click((function(tile) {
+			return function(e) {
+				tile.Click();
+			};
+		})(this));
+	}
+}
+main.Tile.prototype.Mouseover = function(cb) {
+	if(cb == null) {
+		var _g1 = 0, _g = this.mouseovers.length;
+		while(_g1 < _g) {
+			var k = _g1++;
+			this.mouseovers[k](null);
+			this.stats.mouseover.push(tools.Timer.Start());
+		}
+	} else {
+		this.mouseovers.push(cb);
+		this.domContainer.mouseover((function(tile) {
+			return function(e) {
+				tile.Mouseover();
+			};
+		})(this));
+	}
+}
+main.Tile.prototype.Mouseleave = function(cb) {
+	if(cb == null) {
+		var _g1 = 0, _g = this.mouseleaves.length;
+		while(_g1 < _g) {
+			var k = _g1++;
+			this.mouseleaves[k](null);
+			this.stats.duration.push(tools.Timer.Stop());
+		}
+	} else {
+		this.mouseleaves.push(cb);
+		this.domContainer.mouseleave((function(tile) {
+			return function(e) {
+				tile.Mouseleave();
+			};
+		})(this));
+	}
+}
+main.Tile.prototype.__class__ = main.Tile;
+main.Tile.__interfaces__ = [main.Statistics];
+if(typeof character=='undefined') character = {}
+character.CharacterDisplay = function(p) {
+	if( p === $_ ) return;
+	main.Tile.call(this);
+	this.CSS("background-size","100% 100%");
+	this.CSS("background-repeat","no-repeat");
+}
+character.CharacterDisplay.__name__ = ["character","CharacterDisplay"];
+character.CharacterDisplay.__super__ = main.Tile;
+for(var k in main.Tile.prototype ) character.CharacterDisplay.prototype[k] = main.Tile.prototype[k];
+character.CharacterDisplay.prototype.__class__ = character.CharacterDisplay;
+if(typeof tools=='undefined') tools = {}
+tools.TextToolbar = function(p) {
+	if( p === $_ ) return;
+	main.Tile.call(this);
+	this.chatbox = new main.InputTile();
+	this.nametag = new main.InputTile();
+	this.toolbar = new tools.Toolbar({ rows : 1, columns : 4});
+	this.chatbox.Size({ width : 65.0, height : 35.0});
+	this.nametag.Size({ width : 10.0, height : 6.0});
+	this.toolbar.Size({ width : 54.0, height : 6.0});
+}
+tools.TextToolbar.__name__ = ["tools","TextToolbar"];
+tools.TextToolbar.__super__ = main.Tile;
+for(var k in main.Tile.prototype ) tools.TextToolbar.prototype[k] = main.Tile.prototype[k];
+tools.TextToolbar.prototype.chatbox = null;
+tools.TextToolbar.prototype.nametag = null;
+tools.TextToolbar.prototype.toolbar = null;
+tools.TextToolbar.prototype.Position = function(pos) {
+	this.nametag.Position(pos);
+	this.toolbar.Position({ x : pos.x + this.nametag.Size().width, y : pos.y});
+	this.chatbox.Position({ x : pos.x, y : pos.x + this.toolbar.Size().height});
+	return main.Tile.prototype.Position.call(this,pos);
+}
+tools.TextToolbar.prototype.Keypress = function(func) {
+	this.chatbox.Keypress(func);
+}
+tools.TextToolbar.prototype.Keydown = function(func) {
+	this.chatbox.Keydown(func);
+}
+tools.TextToolbar.prototype.Keyup = function(func) {
+	this.chatbox.Keyup(func);
+}
+tools.TextToolbar.prototype.Text = function(txt) {
+	return this.chatbox.Text(txt);
+}
+tools.TextToolbar.prototype.Speaker = function(txt) {
+	return this.nametag.Text(txt);
+}
+tools.TextToolbar.prototype.Size = function(siz) {
+	if(siz == null) return main.Tile.prototype.Size.call(this,siz);
+	var size0 = this.Size();
+	var xrat = siz.width / size0.width;
+	var yrat = siz.height / size0.height;
+	this.chatbox.Size({ width : this.chatbox.Size().width * xrat, height : this.chatbox.Size().height * yrat});
+	this.nametag.Size({ width : this.nametag.Size().width * xrat, height : this.nametag.Size().height * yrat});
+	this.toolbar.Size({ width : this.toolbar.Size().width * xrat, height : this.toolbar.Size().height * yrat});
+	return main.Tile.prototype.Size.call(this,siz);
+}
+tools.TextToolbar.prototype.SetIcon = function(options) {
+	this.toolbar.SetIcon(options);
+}
+tools.TextToolbar.prototype.SetMouseover = function(options) {
+	this.toolbar.SetMouseover(options);
+}
+tools.TextToolbar.prototype.SetMouseleave = function(options) {
+	this.toolbar.SetMouseleave(options);
+}
+tools.TextToolbar.prototype.SetClick = function(options) {
+	this.toolbar.SetClick(options);
+}
+tools.TextToolbar.prototype.__class__ = tools.TextToolbar;
+character.DialogueBox = function(p) {
+	if( p === $_ ) return;
+	tools.TextToolbar.call(this);
+	this.chats = [];
+	this.speakers = [];
+	this.speaker = new main.Tile();
+	this.CSS("width","80%");
+	this.CSS("height","35%");
+	this.CSS("position","absolute");
+	this.CSS("left","7%");
+	this.CSS("top","59%");
+	this.CSS("border","2px solid black");
+	this.CSS("background-color","rgb(200,198,225)");
+	this.CSS("opacity","0.85");
+	this.CSS("border-radius","1em");
+	this.CSS("-moz-border-radius","1em");
+	this.CSS("padding","1em");
+	this.CSS("padding-left","2em");
+	this.CSS("padding-right","2em");
+	this.CSS("z-index","950");
+	this.chatbox.CSS("width","80%");
+	this.chatbox.CSS("height","35%");
+	this.chatbox.CSS("position","absolute");
+	this.chatbox.CSS("left","7%");
+	this.chatbox.CSS("top","59%");
+	this.chatbox.CSS("border","2px solid black");
+	this.chatbox.CSS("background-color","rgb(200,198,225)");
+	this.chatbox.CSS("opacity","0.85");
+	this.chatbox.CSS("border-radius","1em");
+	this.chatbox.CSS("-moz-border-radius","1em");
+	this.chatbox.CSS("padding","1em");
+	this.chatbox.CSS("padding-left","2em");
+	this.chatbox.CSS("padding-right","2em");
+	this.chatbox.CSS("z-index","950");
+	this.speaker.Size({ width : 15.0, height : 3.0});
+	this.speaker.Position({ x : 7.0, y : 50.0});
+	this.speaker.CSS("border","2px solid black");
+	this.speaker.CSS("background-color","rgb(200,198,225)");
+	this.speaker.CSS("opacity","0.85");
+	this.speaker.CSS("border-radius","1em");
+	this.speaker.CSS("-moz-border-radius","1em");
+	this.speaker.CSS("padding","0.7em");
+	this.speaker.CSS("z-index","950");
+	this.speaker.CSS("text-align","center");
+	this.speaker.CSS("font-size","1.75em");
+	this.nametag.Size({ width : 15.0, height : 3.0});
+	this.nametag.Position({ x : 7.0, y : 50.0});
+	this.nametag.CSS("border","2px solid black");
+	this.nametag.CSS("background-color","rgb(200,198,225)");
+	this.nametag.CSS("opacity","0.85");
+	this.nametag.CSS("border-radius","1em");
+	this.nametag.CSS("-moz-border-radius","1em");
+	this.nametag.CSS("padding","0.7em");
+	this.nametag.CSS("z-index","951");
+	this.nametag.CSS("text-align","center");
+	this.nametag.CSS("font-size","1.75em");
+	this.toolbar.Position({ x : 27.5, y : 50.2});
+	this.toolbar.Size({ width : 55.0, height : 8.5});
+	this.toolbar.CSS("background-color","rgb(200,198,225)");
+	this.toolbar.CSS("border-radius","1.5em");
+	this.toolbar.CSS("-moz-border-radius","1.5em");
+	this.toolbar.CSS("opacity","0.85");
+	this.toolbar.CSS("padding-left","2em");
+	this.toolbar.CSS("padding-right","1.5em");
+	this.editmode = false;
+	this.chatbox.Hide();
+	this.nametag.Hide();
+	this.toolbar.Hide();
+}
+character.DialogueBox.__name__ = ["character","DialogueBox"];
+character.DialogueBox.__super__ = tools.TextToolbar;
+for(var k in tools.TextToolbar.prototype ) character.DialogueBox.prototype[k] = tools.TextToolbar.prototype[k];
+character.DialogueBox.prototype.chats = null;
+character.DialogueBox.prototype.speakers = null;
+character.DialogueBox.prototype.speaker = null;
+character.DialogueBox.prototype.editmode = null;
+character.DialogueBox.prototype.EnterEditMode = function(positioncb,sizecb) {
+	this.editmode = true;
+	this.chatbox.Show();
+	this.nametag.Show();
+	this.toolbar.Show();
+}
+character.DialogueBox.prototype.Hide = function(cb) {
+	tools.TextToolbar.prototype.Hide.call(this,cb);
+	this.speaker.Hide(cb);
+	if(cb == null) this.speaker.Hide();
+}
+character.DialogueBox.prototype.Show = function(cb) {
+	tools.TextToolbar.prototype.Show.call(this,cb);
+	this.speaker.Show(cb);
+	if(cb == null) this.speaker.Show();
+}
+character.DialogueBox.prototype.Remove = function() {
+	tools.TextToolbar.prototype.Remove.call(this);
+	this.speaker.Remove();
+}
+character.DialogueBox.prototype.Load = function(scenes) {
+	this.chats = [];
+	this.speakers = [];
+	var _g1 = 0, _g = scenes.length;
+	while(_g1 < _g) {
+		var k = _g1++;
+		this.chats.push(scenes[k].text.content);
+		this.speakers.push(scenes[k].text.speaker);
+	}
+}
+character.DialogueBox.prototype.Chat = function(num) {
+	this.HTML("<p></p><p class=\"visual-novel-dialogue\">" + this.chats[num] + "</p>");
+	this.speaker.HTML(this.speakers[num]);
+	if(this.editmode) {
+		this.Text("<p></p><p class=\"visual-novel-dialogue\">" + this.chats[num] + "</p>");
+		this.Speaker(this.speakers[num]);
+	}
+}
+character.DialogueBox.prototype.Purge = function() {
+}
+character.DialogueBox.prototype.__class__ = character.DialogueBox;
+character.VisualNovel = function(p) {
+	if( p === $_ ) return;
+	main.Tile.call(this);
+	this.dialogue = new character.DialogueBox();
+	this.ending = [];
+	this.scenes = [];
+	this.count = 0;
+	this.ui = [];
+	this.ui.push(new main.Tile());
+	this.loading = new character.LoadingDisplay();
+	this.loading.HTML("<h1>Now Loading...</h1>");
+	this.ui[0].CSS("background-color","rgb(200,198,225)");
+	this.ui[0].Mouseover(function(e) {
+		main.Tooltip.show("Next");
+	});
+	this.ui[0].Mouseleave(function(e) {
+		main.Tooltip.hide();
+	});
+	this.ui[0].CSS("z-index","998");
+	this.ui[0].CSS("opacity","0.75");
+	this.ui[0].CSS("border","2px solid black");
+	this.ui[0].CSS("border-radius","1em");
+	this.ui[0].CSS("-moz-border-radius","1em");
+	this.ui[0].Size({ width : 4.0, height : 4.0});
+	this.ui[0].Position({ x : 87.5, y : 53.0});
+	this.ui[0].CSS("text-align","center");
+	this.ui[0].HTML(">>>");
+}
+character.VisualNovel.__name__ = ["character","VisualNovel"];
+character.VisualNovel.__super__ = main.Tile;
+for(var k in main.Tile.prototype ) character.VisualNovel.prototype[k] = main.Tile.prototype[k];
+character.VisualNovel.prototype.dialogue = null;
+character.VisualNovel.prototype.scenes = null;
+character.VisualNovel.prototype.count = null;
+character.VisualNovel.prototype.ui = null;
+character.VisualNovel.prototype.loading = null;
+character.VisualNovel.prototype.ending = null;
+character.VisualNovel.prototype.Show = function(cb) {
+	if(cb != null) main.Tile.prototype.Show.call(this,cb); else {
+		this.scenes[this.count].Show();
+		var _g1 = 0, _g = this.ui.length;
+		while(_g1 < _g) {
+			var j = _g1++;
+			this.ui[j].Show();
+		}
+		this.dialogue.Show();
+	}
+}
+character.VisualNovel.prototype.Hide = function(cb) {
+	if(cb != null) main.Tile.prototype.Hide.call(this,cb); else {
+		var _g1 = 0, _g = this.scenes.length;
+		while(_g1 < _g) {
+			var k = _g1++;
+			this.scenes[k].Hide();
+		}
+		var _g1 = 0, _g = this.ui.length;
+		while(_g1 < _g) {
+			var j = _g1++;
+			this.ui[j].Hide();
+		}
+		this.dialogue.Hide();
+	}
+}
+character.VisualNovel.prototype.Load = function(scenes) {
+	this.KillScenes();
+	this.LoadingScreen(true);
+	this.scenes = [];
+	this.dialogue.Hide();
+	this.dialogue.Load(scenes);
+	var _g1 = 0, _g = scenes.length;
+	while(_g1 < _g) {
+		var k = _g1++;
+		this.scenes.push(new character.SceneDisplay());
+		this.scenes[k].Hide();
+		this.scenes[k].Load(scenes[k]);
+	}
+	this.count = 0;
+	this.LoadingScreen(false);
+	this.dialogue.Show();
+}
+character.VisualNovel.prototype.Scene = function(num) {
+	if(num == null) return this.scenes[this.count]; else {
+		this.scenes[this.count].Hide();
+		this.count = num;
+		this.dialogue.Chat(num);
+		this.scenes[this.count].Show();
+		return this.scenes[this.count];
+	}
+}
+character.VisualNovel.prototype.LoadingDisplay = function() {
+	return this.loading;
+}
+character.VisualNovel.prototype.LoadingScreen = function(flag) {
+	if(flag) this.loading.Show(); else this.loading.Hide();
+}
+character.VisualNovel.prototype.Remove = function() {
+	this.KillScenes();
+	this.dialogue.Remove();
+	var _g1 = 0, _g = this.ui.length;
+	while(_g1 < _g) {
+		var k = _g1++;
+		this.ui[k].Remove();
+	}
+	main.Tile.prototype.Remove.call(this);
+}
+character.VisualNovel.prototype.End = function(cb) {
+	if(cb == null) {
+		var _g1 = 0, _g = this.ending.length;
+		while(_g1 < _g) {
+			var k = _g1++;
+			this.ending[k]();
+		}
+	} else this.ending.push(cb);
+}
+character.VisualNovel.prototype.Next = function() {
+	this.scenes[this.count].Hide();
+	this.count++;
+	if(this.count >= this.scenes.length) {
+		this.count--;
+		this.End();
+		return this.scenes[this.count];
+	} else {
+		this.dialogue.Chat(this.count);
+		this.scenes[this.count].Show();
+		return this.scenes[this.count];
+	}
+}
+character.VisualNovel.prototype.Previous = function() {
+	this.scenes[this.count].Hide();
+	this.count--;
+	this.count = this.count < 0?0:this.count;
+	this.dialogue.Chat(this.count);
+	this.scenes[this.count].Show();
+	return this.scenes[this.count];
+}
+character.VisualNovel.prototype.KillScenes = function() {
+	var _g1 = 0, _g = this.scenes.length;
+	while(_g1 < _g) {
+		var k = _g1++;
+		this.scenes[k].Remove();
+	}
+	this.scenes = [];
+}
+character.VisualNovel.prototype.Click = function(cb) {
+	if(cb != null) {
+		this.dialogue.Click(cb);
+		this.ui[0].Click(cb);
+	} else this.dialogue.Click(cb);
+}
+character.VisualNovel.prototype.__class__ = character.VisualNovel;
+character.VisualNovelEditor = function(p) {
+	if( p === $_ ) return;
+	character.VisualNovel.call(this);
+	this.stock = new tools.VerticalBar();
+	this.layer = new tools.VerticalBar();
+	this.stock.Position({ x : 0.0, y : 15.0});
+	this.stock.Size({ width : 4.0, height : 80.0});
+	this.layer.Position({ x : 95.5, y : 15.0});
+	this.layer.Size({ width : 4.0, height : 80.0});
+}
+character.VisualNovelEditor.__name__ = ["character","VisualNovelEditor"];
+character.VisualNovelEditor.__super__ = character.VisualNovel;
+for(var k in character.VisualNovel.prototype ) character.VisualNovelEditor.prototype[k] = character.VisualNovel.prototype[k];
+character.VisualNovelEditor.main = function() {
+	var FUCKINGNIGGERS = "j23i2j";
+}
+character.VisualNovelEditor.prototype.stock = null;
+character.VisualNovelEditor.prototype.layer = null;
+character.VisualNovelEditor.prototype.SetUI = function(options) {
+	if(options.num == 0) {
+		this.stock.SetIcon({ row : options.row, col : options.col, image : options.images});
+		this.stock.SetClick({ row : options.row, col : options.col, func : options.callbacks});
+	} else if(options.num == 1) {
+		this.layer.SetIcon({ row : options.row, col : options.col, image : options.images});
+		this.layer.SetClick({ row : options.row, col : options.col, func : options.callbacks});
+	} else if(options.num == 2) {
+		this.dialogue.SetIcon({ row : options.row, col : options.col, image : options.images});
+		this.dialogue.SetClick({ row : options.row, col : options.col, func : options.callbacks});
+	}
+}
+character.VisualNovelEditor.prototype.EnterEditMode = function(positioncb,sizecb) {
+	var _g1 = 0, _g = this.scenes.length;
+	while(_g1 < _g) {
+		var k = _g1++;
+		this.scenes[k].EnterEditMode(positioncb,sizecb);
+	}
+	this.dialogue.EnterEditMode(positioncb,sizecb);
+}
+character.VisualNovelEditor.prototype.Keypress = function(func) {
+	this.dialogue.Keypress(func);
+}
+character.VisualNovelEditor.prototype.GetState = function() {
+	var data = { background : { image : this.Scene().Background().SetAnimation()}, foreground : { images : [], positions : [], sizes : []}, text : { content : this.dialogue.Text(), speaker : this.dialogue.Speaker()}};
+	var _g1 = 0, _g = this.Scene().Characters().length;
+	while(_g1 < _g) {
+		var k = _g1++;
+		var character = this.Scene().Characters()[k];
+		data.foreground.images.push(character.SetAnimation());
+		data.foreground.positions.push(character.Position());
+		data.foreground.sizes.push(character.Size());
+	}
+	return data;
+}
+character.VisualNovelEditor.prototype.__class__ = character.VisualNovelEditor;
+if(typeof haxe=='undefined') haxe = {}
+haxe.Log = function() { }
+haxe.Log.__name__ = ["haxe","Log"];
+haxe.Log.trace = function(v,infos) {
+	js.Boot.__trace(v,infos);
+}
+haxe.Log.clear = function() {
+	js.Boot.__clear_trace();
+}
+haxe.Log.prototype.__class__ = haxe.Log;
+haxe.Timer = function(time_ms) {
+	if( time_ms === $_ ) return;
+	var arr = haxe_timers;
+	this.id = arr.length;
+	arr[this.id] = this;
+	this.timerId = window.setInterval("haxe_timers[" + this.id + "].run();",time_ms);
+}
+haxe.Timer.__name__ = ["haxe","Timer"];
+haxe.Timer.delay = function(f,time_ms) {
+	var t = new haxe.Timer(time_ms);
+	t.run = function() {
+		t.stop();
+		f();
+	};
+	return t;
+}
+haxe.Timer.measure = function(f,pos) {
+	var t0 = haxe.Timer.stamp();
+	var r = f();
+	haxe.Log.trace(haxe.Timer.stamp() - t0 + "s",pos);
+	return r;
+}
+haxe.Timer.stamp = function() {
+	return Date.now().getTime() / 1000;
+}
+haxe.Timer.prototype.id = null;
+haxe.Timer.prototype.timerId = null;
+haxe.Timer.prototype.stop = function() {
+	if(this.id == null) return;
+	window.clearInterval(this.timerId);
+	var arr = haxe_timers;
+	arr[this.id] = null;
+	if(this.id > 100 && this.id == arr.length - 1) {
+		var p = this.id - 1;
+		while(p >= 0 && arr[p] == null) p--;
+		arr = arr.slice(0,p + 1);
+	}
+	this.id = null;
+}
+haxe.Timer.prototype.run = function() {
+}
+haxe.Timer.prototype.__class__ = haxe.Timer;
+tools.Timer = function() { }
+tools.Timer.__name__ = ["tools","Timer"];
+tools.Timer.Start = function() {
+	tools.Timer.TIME = haxe.Timer.stamp();
+	return tools.Timer.TIME;
+}
+tools.Timer.Stop = function() {
+	var startTime = tools.Timer.TIME;
+	var difference = tools.Timer.Start() - startTime;
+	return difference;
+}
+tools.Timer.prototype.__class__ = tools.Timer;
+character.LoadingDisplay = function(p) {
+	if( p === $_ ) return;
+	main.Tile.call(this);
+	this.Position({ x : 40.0, y : 40.0});
+	this.Size({ width : 25.0, height : 25.0});
+	this.Mouseover(function(e) {
+		main.Tooltip.show("Still Loading, buddy");
+	});
+	this.Mouseleave(function(e) {
+		main.Tooltip.hide();
+	});
+}
+character.LoadingDisplay.__name__ = ["character","LoadingDisplay"];
+character.LoadingDisplay.__super__ = main.Tile;
+for(var k in main.Tile.prototype ) character.LoadingDisplay.prototype[k] = main.Tile.prototype[k];
+character.LoadingDisplay.prototype.__class__ = character.LoadingDisplay;
+IntIter = function(min,max) {
+	if( min === $_ ) return;
+	this.min = min;
+	this.max = max;
+}
+IntIter.__name__ = ["IntIter"];
+IntIter.prototype.min = null;
+IntIter.prototype.max = null;
+IntIter.prototype.hasNext = function() {
+	return this.min < this.max;
+}
+IntIter.prototype.next = function() {
+	return this.min++;
+}
+IntIter.prototype.__class__ = IntIter;
+Std = function() { }
+Std.__name__ = ["Std"];
+Std["is"] = function(v,t) {
+	return js.Boot.__instanceof(v,t);
+}
+Std.string = function(s) {
+	return js.Boot.__string_rec(s,"");
+}
+Std["int"] = function(x) {
+	if(x < 0) return Math.ceil(x);
+	return Math.floor(x);
+}
+Std.parseInt = function(x) {
+	var v = parseInt(x,10);
+	if(v == 0 && x.charCodeAt(1) == 120) v = parseInt(x);
+	if(isNaN(v)) return null;
+	return v;
+}
+Std.parseFloat = function(x) {
+	return parseFloat(x);
+}
+Std.random = function(x) {
+	return Math.floor(Math.random() * x);
+}
+Std.prototype.__class__ = Std;
+character.BackgroundDisplay = function(p) {
+	if( p === $_ ) return;
+	main.Tile.call(this);
+	this.Size({ width : 100.0, height : 100.0});
+	this.Position({ x : 0.0, y : 0.0});
+}
+character.BackgroundDisplay.__name__ = ["character","BackgroundDisplay"];
+character.BackgroundDisplay.__super__ = main.Tile;
+for(var k in main.Tile.prototype ) character.BackgroundDisplay.prototype[k] = main.Tile.prototype[k];
+character.BackgroundDisplay.prototype.Show = function(cb) {
+	if(this.image == null) return;
+	main.Tile.prototype.Show.call(this,cb);
+}
+character.BackgroundDisplay.prototype.__class__ = character.BackgroundDisplay;
+main.Tooltip = function() { }
+main.Tooltip.__name__ = ["main","Tooltip"];
+main.Tooltip.show = function(text) {
+	tooltip.show(text);
+}
+main.Tooltip.hide = function() {
+	tooltip.hide();
+}
+main.Tooltip.prototype.__class__ = main.Tooltip;
+main.InputTile = function(p) {
+	if( p === $_ ) return;
+	main.Tile.call(this);
+	this.domContainer.append("<textarea type='text' id='" + main.Element.NAME + "-" + main.Element.ID + "-type-INPUT' />");
+	this.input = new js.JQuery("#" + main.Element.NAME + "-" + main.Element.ID + "-type-INPUT");
+	this.input.css("width","100%");
+	this.input.css("height","100%");
+}
+main.InputTile.__name__ = ["main","InputTile"];
+main.InputTile.__super__ = main.Tile;
+for(var k in main.Tile.prototype ) main.InputTile.prototype[k] = main.Tile.prototype[k];
+main.InputTile.prototype.input = null;
+main.InputTile.prototype.Keypress = function(func) {
+	this.input.keypress(func);
+}
+main.InputTile.prototype.Keydown = function(func) {
+	this.input.keydown(func);
+}
+main.InputTile.prototype.Keyup = function(func) {
+	this.input.keyup(func);
+}
+main.InputTile.prototype.Text = function(txt) {
+	if(txt == null) return this.input.val(); else {
+		this.input.html(txt);
+		return this.input.val();
+	}
+}
+main.InputTile.prototype.__class__ = main.InputTile;
 if(typeof js=='undefined') js = {}
+js.Lib = function() { }
+js.Lib.__name__ = ["js","Lib"];
+js.Lib.isIE = null;
+js.Lib.isOpera = null;
+js.Lib.document = null;
+js.Lib.window = null;
+js.Lib.alert = function(v) {
+	alert(js.Boot.__string_rec(v,""));
+}
+js.Lib.eval = function(code) {
+	return eval(code);
+}
+js.Lib.setErrorHandler = function(f) {
+	js.Lib.onerror = f;
+}
+js.Lib.prototype.__class__ = js.Lib;
+tools.Toolbar = function(dim) {
+	if( dim === $_ ) return;
+	main.Tile.call(this);
+	this.Dimension(dim);
+	this.CSS("border","2px solid black");
+	this.CSS("background-color","rgb(200,198,225)");
+	this.CSS("opacity","0.85");
+}
+tools.Toolbar.__name__ = ["tools","Toolbar"];
+tools.Toolbar.__super__ = main.Tile;
+for(var k in main.Tile.prototype ) tools.Toolbar.prototype[k] = main.Tile.prototype[k];
+tools.Toolbar.prototype.dimension = null;
+tools.Toolbar.prototype.vector = null;
+tools.Toolbar.prototype.Dimension = function(dim) {
+	if(dim == null) return this.dimension; else {
+		this.dimension = dim;
+		this.vector = [];
+		var unitx = 85 / dim.columns;
+		var unity = 70 / dim.rows;
+		var _g1 = 0, _g = dim.rows;
+		while(_g1 < _g) {
+			var j = _g1++;
+			this.vector.push([]);
+			var _g3 = 0, _g2 = dim.columns;
+			while(_g3 < _g2) {
+				var k = _g3++;
+				var mytile = new main.Tile();
+				this.vector[j].push(mytile);
+				this.domContainer.append(mytile.domContainer);
+				mytile.Size({ width : unitx, height : unity});
+				mytile.Position({ x : 3 + k * (unitx + 1), y : 10 + j * (unity + 1)});
+				mytile.CSS("border-radius","0.5em");
+				mytile.CSS("-moz-border-radius","0.5em");
+			}
+		}
+		return this.dimension;
+	}
+}
+tools.Toolbar.prototype.SetIcon = function(options) {
+	var row = options.row;
+	var col = options.col;
+	this.vector[row][col].SetAnimation(options.image);
+}
+tools.Toolbar.prototype.SetMouseover = function(options) {
+	this.vector[options.row][options.col].Mouseover(options.func);
+}
+tools.Toolbar.prototype.SetMouseleave = function(options) {
+	this.vector[options.row][options.col].Mouseleave(options.func);
+}
+tools.Toolbar.prototype.SetClick = function(options) {
+	this.vector[options.row][options.col].Click(options.func);
+}
+tools.Toolbar.prototype.__class__ = tools.Toolbar;
+tools.VerticalBar = function(p) {
+	if( p === $_ ) return;
+	tools.Toolbar.call(this,{ rows : 0, columns : 0});
+	this.Length(6);
+}
+tools.VerticalBar.__name__ = ["tools","VerticalBar"];
+tools.VerticalBar.__super__ = tools.Toolbar;
+for(var k in tools.Toolbar.prototype ) tools.VerticalBar.prototype[k] = tools.Toolbar.prototype[k];
+tools.VerticalBar.prototype.Length = function(length) {
+	if(length == null) return this.dimension.columns; else {
+		this.dimension.rows = 1;
+		this.dimension.columns = length;
+		this.vector = [];
+		var unitx = 95.0;
+		var unity = 70.0 / length;
+		this.vector.push([]);
+		var _g = 0;
+		while(_g < length) {
+			var k = _g++;
+			var mytile = new main.Tile();
+			this.vector[0].push(mytile);
+			this.domContainer.append(mytile.domContainer);
+			mytile.Size({ width : unitx, height : unity});
+			mytile.Position({ x : 0.5, y : 10 + k * (unity + 1)});
+			mytile.CSS("border-radius","0.5em");
+			mytile.CSS("-moz-border-radius","0.5em");
+		}
+		return this.dimension.columns;
+	}
+}
+tools.VerticalBar.prototype.__class__ = tools.VerticalBar;
 js.Boot = function() { }
 js.Boot.__name__ = ["js","Boot"];
 js.Boot.__unhtml = function(s) {
@@ -181,504 +1076,6 @@ js.Boot.__init = function() {
 	$closure = js.Boot.__closure;
 }
 js.Boot.prototype.__class__ = js.Boot;
-if(typeof main=='undefined') main = {}
-main.Tooltip = function() { }
-main.Tooltip.__name__ = ["main","Tooltip"];
-main.Tooltip.show = function(text) {
-	tooltip.show(text);
-}
-main.Tooltip.hide = function() {
-	tooltip.hide();
-}
-main.Tooltip.prototype.__class__ = main.Tooltip;
-main.Element = function(p) {
-	if( p === $_ ) return;
-	this.hides = [];
-	this.shows = [];
-	this.position = { x : 0, y : 0};
-	this.size = { width : 75, height : 75};
-	this.domBody = new js.JQuery("body");
-	this.parent = this.domBody;
-	this.domBody.append("<div id='" + main.Element.NAME + "-" + main.Element.ID + "'></div>");
-	this.domContainer = new js.JQuery("#" + main.Element.NAME + "-" + main.Element.ID);
-	main.Element.ID += 1;
-	this.CSS("z-index","967");
-	this.CSS("position","absolute");
-	js.Lib.window.onresize = (function(el) {
-		return function(e) {
-			el.Track();
-		};
-	})(this);
-}
-main.Element.__name__ = ["main","Element"];
-main.Element.prototype.domContainer = null;
-main.Element.prototype.domBody = null;
-main.Element.prototype.position = null;
-main.Element.prototype.size = null;
-main.Element.prototype.hides = null;
-main.Element.prototype.shows = null;
-main.Element.prototype.parent = null;
-main.Element.prototype.timer = null;
-main.Element.prototype.Track = function() {
-	if(this.parent.length < 1) {
-		this.Remove();
-		return;
-	}
-	if(this.parent.attr("visibility") == "hidden") this.Hide();
-	this.Position(this.position);
-	var scale = this.parent.attr("-moz-transform");
-	if(scale != "") this.CSS("-moz-transform",scale);
-}
-main.Element.prototype.Parent = function(parent) {
-	if(parent == null) return this.parent; else {
-		if(this.parent.length == 0) this.parent = this.domBody;
-		return this.parent;
-	}
-}
-main.Element.prototype.Position = function(pos) {
-	main.Element.TestCounter++;
-	if(pos == null) return this.position;
-	this.position = pos;
-	var offset = { top : this.parent.innerHeight(), left : this.parent.innerWidth()};
-	var x = this.position.x;
-	var y = this.position.y;
-	this.domContainer.css("left",x + "%");
-	this.domContainer.css("top",y + "%");
-	return this.position;
-}
-main.Element.prototype.Size = function(siz) {
-	if(siz == null) return this.size;
-	this.size = siz;
-	this.domContainer.css("width",this.size.width + "%");
-	this.domContainer.css("height",this.size.height + "%");
-	this.domContainer.css("background-size","100% 100%");
-	return this.size;
-}
-main.Element.prototype.Remove = function() {
-	this.Hide();
-	this.domContainer.remove();
-}
-main.Element.prototype.Hide = function(cb) {
-	if(cb == null) this.domContainer.hide(500,(function(element) {
-		return function() {
-			var _g1 = 0, _g = element.hides.length;
-			while(_g1 < _g) {
-				var k = _g1++;
-				element.hides[k]();
-			}
-		};
-	})(this)); else this.hides.push(cb);
-}
-main.Element.prototype.Show = function(cb) {
-	if(cb == null) this.domContainer.show(250,(function(element) {
-		return function() {
-			var _g1 = 0, _g = element.shows.length;
-			while(_g1 < _g) {
-				var k = _g1++;
-				element.shows[k]();
-			}
-		};
-	})(this)); else this.shows.push(cb);
-}
-main.Element.prototype.CSS = function(prop,value) {
-	this.domContainer.css(prop,value);
-}
-main.Element.prototype.HTML = function(html) {
-	if(html == null) return this.domContainer.html();
-	this.domContainer.html(html);
-	return html;
-}
-main.Element.prototype.__class__ = main.Element;
-js.Lib = function() { }
-js.Lib.__name__ = ["js","Lib"];
-js.Lib.isIE = null;
-js.Lib.isOpera = null;
-js.Lib.document = null;
-js.Lib.window = null;
-js.Lib.alert = function(v) {
-	alert(js.Boot.__string_rec(v,""));
-}
-js.Lib.eval = function(code) {
-	return eval(code);
-}
-js.Lib.setErrorHandler = function(f) {
-	js.Lib.onerror = f;
-}
-js.Lib.prototype.__class__ = js.Lib;
-main.Statistics = function() { }
-main.Statistics.__name__ = ["main","Statistics"];
-main.Statistics.prototype.stats = null;
-main.Statistics.prototype.Stats = null;
-main.Statistics.prototype.ClearStats = null;
-main.Statistics.prototype.__class__ = main.Statistics;
-main.Tile = function(p) {
-	if( p === $_ ) return;
-	this.ClearStats();
-	this.clicks = [];
-	this.mouseovers = [];
-	this.mouseleaves = [];
-	main.Element.call(this);
-	this.CSS("z-index","968");
-}
-main.Tile.__name__ = ["main","Tile"];
-main.Tile.__super__ = main.Element;
-for(var k in main.Element.prototype ) main.Tile.prototype[k] = main.Element.prototype[k];
-main.Tile.prototype.image = null;
-main.Tile.prototype.clicks = null;
-main.Tile.prototype.mouseovers = null;
-main.Tile.prototype.mouseleaves = null;
-main.Tile.prototype.stats = null;
-main.Tile.prototype.Stats = function() {
-	return this.stats;
-}
-main.Tile.prototype.ClearStats = function() {
-	var tempstats = this.stats;
-	this.stats = { mouseover : [], duration : [], click : []};
-	return tempstats;
-}
-main.Tile.prototype.SetAnimation = function(image) {
-	if(image == null) return this.image; else if(this.image == image) return this.image;
-	this.image = image;
-	this.CSS("background-image","url('" + image + "')");
-	return this.image;
-}
-main.Tile.prototype.Click = function(cb) {
-	if(cb == null) {
-		var _g1 = 0, _g = this.clicks.length;
-		while(_g1 < _g) {
-			var k = _g1++;
-			this.clicks[k](null);
-			this.stats.click.push(haxe.Timer.stamp());
-		}
-	} else {
-		this.clicks.push(cb);
-		this.domContainer.click((function(tile) {
-			return function(e) {
-				tile.Click();
-			};
-		})(this));
-	}
-}
-main.Tile.prototype.Mouseover = function(cb) {
-	if(cb == null) {
-		var _g1 = 0, _g = this.mouseovers.length;
-		while(_g1 < _g) {
-			var k = _g1++;
-			this.mouseovers[k](null);
-			this.stats.mouseover.push(tools.Timer.Start());
-		}
-	} else {
-		this.mouseovers.push(cb);
-		this.domContainer.mouseover((function(tile) {
-			return function(e) {
-				tile.Mouseover();
-			};
-		})(this));
-	}
-}
-main.Tile.prototype.Mouseleave = function(cb) {
-	if(cb == null) {
-		var _g1 = 0, _g = this.mouseleaves.length;
-		while(_g1 < _g) {
-			var k = _g1++;
-			this.mouseleaves[k](null);
-			this.stats.duration.push(tools.Timer.Stop());
-		}
-	} else {
-		this.mouseleaves.push(cb);
-		this.domContainer.mouseleave((function(tile) {
-			return function(e) {
-				tile.Mouseleave();
-			};
-		})(this));
-	}
-}
-main.Tile.prototype.__class__ = main.Tile;
-main.Tile.__interfaces__ = [main.Statistics];
-if(typeof character=='undefined') character = {}
-character.VisualNovel = function(p) {
-	if( p === $_ ) return;
-	main.Tile.call(this);
-	this.dialogue = new character.DialogueBox();
-	this.ending = [];
-	this.scenes = [];
-	this.count = 0;
-	this.ui = [];
-	this.ui.push(new main.Tile());
-	this.loading = new character.LoadingDisplay();
-	this.loading.HTML("<h1>Now Loading...</h1>");
-	this.ui[0].CSS("background-color","rgb(200,198,225)");
-	this.ui[0].Mouseover(function(e) {
-		main.Tooltip.show("Next");
-	});
-	this.ui[0].Mouseleave(function(e) {
-		main.Tooltip.hide();
-	});
-	this.ui[0].CSS("z-index","998");
-	this.ui[0].CSS("opacity","0.75");
-	this.ui[0].CSS("border","2px solid black");
-	this.ui[0].CSS("border-radius","1em");
-	this.ui[0].CSS("-moz-border-radius","1em");
-	this.ui[0].Size({ width : 4, height : 4});
-	this.ui[0].Position({ x : 90, y : 55});
-	this.ui[0].CSS("text-align","center");
-	this.ui[0].HTML(">>>");
-}
-character.VisualNovel.__name__ = ["character","VisualNovel"];
-character.VisualNovel.__super__ = main.Tile;
-for(var k in main.Tile.prototype ) character.VisualNovel.prototype[k] = main.Tile.prototype[k];
-character.VisualNovel.main = function() {
-	var FUCKINGNIGGERS = "j23i2j";
-}
-character.VisualNovel.prototype.dialogue = null;
-character.VisualNovel.prototype.scenes = null;
-character.VisualNovel.prototype.count = null;
-character.VisualNovel.prototype.ui = null;
-character.VisualNovel.prototype.loading = null;
-character.VisualNovel.prototype.ending = null;
-character.VisualNovel.prototype.Show = function(cb) {
-	if(cb != null) main.Tile.prototype.Show.call(this,cb); else {
-		this.scenes[this.count].Show();
-		var _g1 = 0, _g = this.ui.length;
-		while(_g1 < _g) {
-			var j = _g1++;
-			this.ui[j].Show();
-		}
-		this.dialogue.Show();
-	}
-}
-character.VisualNovel.prototype.Hide = function(cb) {
-	if(cb != null) main.Tile.prototype.Hide.call(this,cb); else {
-		var _g1 = 0, _g = this.scenes.length;
-		while(_g1 < _g) {
-			var k = _g1++;
-			this.scenes[k].Hide();
-		}
-		var _g1 = 0, _g = this.ui.length;
-		while(_g1 < _g) {
-			var j = _g1++;
-			this.ui[j].Hide();
-		}
-		this.dialogue.Hide();
-	}
-}
-character.VisualNovel.prototype.Load = function(scenes) {
-	this.KillScenes();
-	this.LoadingScreen(true);
-	this.scenes = [];
-	this.dialogue.Hide();
-	this.dialogue.Load(scenes);
-	var _g1 = 0, _g = scenes.length;
-	while(_g1 < _g) {
-		var k = _g1++;
-		this.scenes.push(new character.SceneDisplay());
-		this.scenes[k].Hide();
-		this.scenes[k].Load(scenes[k]);
-	}
-	this.count = 0;
-	this.LoadingScreen(false);
-	this.dialogue.Show();
-}
-character.VisualNovel.prototype.Scene = function(num) {
-	if(num == null) return this.scenes[this.count]; else {
-		this.scenes[this.count].Hide();
-		this.count = num;
-		this.dialogue.Chat(num);
-		this.scenes[this.count].Show();
-		return this.scenes[this.count];
-	}
-}
-character.VisualNovel.prototype.LoadingDisplay = function() {
-	return this.loading;
-}
-character.VisualNovel.prototype.LoadingScreen = function(flag) {
-	if(flag) this.loading.Show(); else this.loading.Hide();
-}
-character.VisualNovel.prototype.Remove = function() {
-	this.KillScenes();
-	this.dialogue.Remove();
-	var _g1 = 0, _g = this.ui.length;
-	while(_g1 < _g) {
-		var k = _g1++;
-		this.ui[k].Remove();
-	}
-	main.Tile.prototype.Remove.call(this);
-}
-character.VisualNovel.prototype.End = function(cb) {
-	if(cb == null) {
-		var _g1 = 0, _g = this.ending.length;
-		while(_g1 < _g) {
-			var k = _g1++;
-			this.ending[k]();
-		}
-	} else this.ending.push(cb);
-}
-character.VisualNovel.prototype.Next = function() {
-	this.scenes[this.count].Hide();
-	this.count++;
-	if(this.count >= this.scenes.length) {
-		this.count--;
-		this.End();
-		return this.scenes[this.count];
-	} else {
-		this.dialogue.Chat(this.count);
-		this.scenes[this.count].Show();
-		return this.scenes[this.count];
-	}
-}
-character.VisualNovel.prototype.Previous = function() {
-	this.scenes[this.count].Hide();
-	this.count--;
-	this.count = this.count < 0?0:this.count;
-	this.dialogue.Chat(this.count);
-	this.scenes[this.count].Show();
-	return this.scenes[this.count];
-}
-character.VisualNovel.prototype.KillScenes = function() {
-	var _g1 = 0, _g = this.scenes.length;
-	while(_g1 < _g) {
-		var k = _g1++;
-		this.scenes[k].Remove();
-	}
-	this.scenes = [];
-}
-character.VisualNovel.prototype.Click = function(cb) {
-	if(cb != null) {
-		this.dialogue.Click(cb);
-		this.ui[0].Click(cb);
-	} else this.dialogue.Click(cb);
-}
-character.VisualNovel.prototype.__class__ = character.VisualNovel;
-if(typeof haxe=='undefined') haxe = {}
-haxe.Log = function() { }
-haxe.Log.__name__ = ["haxe","Log"];
-haxe.Log.trace = function(v,infos) {
-	js.Boot.__trace(v,infos);
-}
-haxe.Log.clear = function() {
-	js.Boot.__clear_trace();
-}
-haxe.Log.prototype.__class__ = haxe.Log;
-character.LoadingDisplay = function(p) {
-	if( p === $_ ) return;
-	main.Tile.call(this);
-	this.Position({ x : 40, y : 40});
-	this.Size({ width : 25, height : 25});
-	this.Mouseover(function(e) {
-		main.Tooltip.show("Still Loading, buddy");
-	});
-	this.Mouseleave(function(e) {
-		main.Tooltip.hide();
-	});
-}
-character.LoadingDisplay.__name__ = ["character","LoadingDisplay"];
-character.LoadingDisplay.__super__ = main.Tile;
-for(var k in main.Tile.prototype ) character.LoadingDisplay.prototype[k] = main.Tile.prototype[k];
-character.LoadingDisplay.prototype.__class__ = character.LoadingDisplay;
-character.CharacterDisplay = function(p) {
-	if( p === $_ ) return;
-	main.Tile.call(this);
-	this.CSS("background-size","100% 100%");
-	this.CSS("background-repeat","no-repeat");
-}
-character.CharacterDisplay.__name__ = ["character","CharacterDisplay"];
-character.CharacterDisplay.__super__ = main.Tile;
-for(var k in main.Tile.prototype ) character.CharacterDisplay.prototype[k] = main.Tile.prototype[k];
-character.CharacterDisplay.prototype.__class__ = character.CharacterDisplay;
-Std = function() { }
-Std.__name__ = ["Std"];
-Std["is"] = function(v,t) {
-	return js.Boot.__instanceof(v,t);
-}
-Std.string = function(s) {
-	return js.Boot.__string_rec(s,"");
-}
-Std["int"] = function(x) {
-	if(x < 0) return Math.ceil(x);
-	return Math.floor(x);
-}
-Std.parseInt = function(x) {
-	var v = parseInt(x,10);
-	if(v == 0 && x.charCodeAt(1) == 120) v = parseInt(x);
-	if(isNaN(v)) return null;
-	return v;
-}
-Std.parseFloat = function(x) {
-	return parseFloat(x);
-}
-Std.random = function(x) {
-	return Math.floor(Math.random() * x);
-}
-Std.prototype.__class__ = Std;
-haxe.Timer = function(time_ms) {
-	if( time_ms === $_ ) return;
-	var arr = haxe_timers;
-	this.id = arr.length;
-	arr[this.id] = this;
-	this.timerId = window.setInterval("haxe_timers[" + this.id + "].run();",time_ms);
-}
-haxe.Timer.__name__ = ["haxe","Timer"];
-haxe.Timer.delay = function(f,time_ms) {
-	var t = new haxe.Timer(time_ms);
-	t.run = function() {
-		t.stop();
-		f();
-	};
-	return t;
-}
-haxe.Timer.measure = function(f,pos) {
-	var t0 = haxe.Timer.stamp();
-	var r = f();
-	haxe.Log.trace(haxe.Timer.stamp() - t0 + "s",pos);
-	return r;
-}
-haxe.Timer.stamp = function() {
-	return Date.now().getTime() / 1000;
-}
-haxe.Timer.prototype.id = null;
-haxe.Timer.prototype.timerId = null;
-haxe.Timer.prototype.stop = function() {
-	if(this.id == null) return;
-	window.clearInterval(this.timerId);
-	var arr = haxe_timers;
-	arr[this.id] = null;
-	if(this.id > 100 && this.id == arr.length - 1) {
-		var p = this.id - 1;
-		while(p >= 0 && arr[p] == null) p--;
-		arr = arr.slice(0,p + 1);
-	}
-	this.id = null;
-}
-haxe.Timer.prototype.run = function() {
-}
-haxe.Timer.prototype.__class__ = haxe.Timer;
-if(typeof tools=='undefined') tools = {}
-tools.Timer = function() { }
-tools.Timer.__name__ = ["tools","Timer"];
-tools.Timer.Start = function() {
-	tools.Timer.TIME = haxe.Timer.stamp();
-	return tools.Timer.TIME;
-}
-tools.Timer.Stop = function() {
-	var startTime = tools.Timer.TIME;
-	var difference = tools.Timer.Start() - startTime;
-	return difference;
-}
-tools.Timer.prototype.__class__ = tools.Timer;
-character.BackgroundDisplay = function(p) {
-	if( p === $_ ) return;
-	main.Tile.call(this);
-	this.Size({ width : 100, height : 100});
-	this.Position({ x : 0, y : 0});
-}
-character.BackgroundDisplay.__name__ = ["character","BackgroundDisplay"];
-character.BackgroundDisplay.__super__ = main.Tile;
-for(var k in main.Tile.prototype ) character.BackgroundDisplay.prototype[k] = main.Tile.prototype[k];
-character.BackgroundDisplay.prototype.Show = function(cb) {
-	if(this.image == null) return;
-	main.Tile.prototype.Show.call(this,cb);
-}
-character.BackgroundDisplay.prototype.__class__ = character.BackgroundDisplay;
 character.SceneDisplay = function(p) {
 	if( p === $_ ) return;
 	this.characters = [];
@@ -690,6 +1087,16 @@ character.SceneDisplay.__super__ = main.Tile;
 for(var k in main.Tile.prototype ) character.SceneDisplay.prototype[k] = main.Tile.prototype[k];
 character.SceneDisplay.prototype.characters = null;
 character.SceneDisplay.prototype.background = null;
+character.SceneDisplay.prototype.EnterEditMode = function(positioncb,sizecb) {
+	var _g1 = 0, _g = this.characters.length;
+	while(_g1 < _g) {
+		var k = _g1++;
+		this.characters[k].EnterEditMode(positioncb,sizecb);
+	}
+}
+character.SceneDisplay.prototype.Characters = function() {
+	return this.characters;
+}
 character.SceneDisplay.prototype.Remove = function() {
 	main.Tile.prototype.Remove.call(this);
 	this.background.Remove();
@@ -759,88 +1166,6 @@ character.SceneDisplay.prototype.Load = function(scene) {
 	}
 }
 character.SceneDisplay.prototype.__class__ = character.SceneDisplay;
-character.DialogueBox = function(p) {
-	if( p === $_ ) return;
-	main.Tile.call(this);
-	this.chats = [];
-	this.speakers = [];
-	this.speaker = new main.Tile();
-	this.CSS("width","80%");
-	this.CSS("height","35%");
-	this.CSS("position","absolute");
-	this.CSS("left","10%");
-	this.CSS("top","60%");
-	this.CSS("border","2px solid black");
-	this.CSS("background-color","rgb(200,198,225)");
-	this.CSS("opacity","0.85");
-	this.CSS("border-radius","1em");
-	this.CSS("-moz-border-radius","1em");
-	this.CSS("padding","1em");
-	this.CSS("padding-left","2em");
-	this.CSS("padding-right","2em");
-	this.CSS("z-index","950");
-	this.speaker.Size({ width : 15, height : 3});
-	this.speaker.Position({ x : 10, y : 52});
-	this.speaker.CSS("border","2px solid black");
-	this.speaker.CSS("background-color","rgb(200,198,225)");
-	this.speaker.CSS("opacity","0.85");
-	this.speaker.CSS("border-radius","1em");
-	this.speaker.CSS("-moz-border-radius","1em");
-	this.speaker.CSS("padding","0.7em");
-	this.speaker.CSS("z-index","950");
-	this.speaker.CSS("text-align","center");
-	this.speaker.CSS("font-size","1.75em");
-}
-character.DialogueBox.__name__ = ["character","DialogueBox"];
-character.DialogueBox.__super__ = main.Tile;
-for(var k in main.Tile.prototype ) character.DialogueBox.prototype[k] = main.Tile.prototype[k];
-character.DialogueBox.prototype.chats = null;
-character.DialogueBox.prototype.speakers = null;
-character.DialogueBox.prototype.speaker = null;
-character.DialogueBox.prototype.Hide = function(cb) {
-	main.Tile.prototype.Hide.call(this,cb);
-	if(cb == null) this.speaker.Hide();
-}
-character.DialogueBox.prototype.Show = function(cb) {
-	main.Tile.prototype.Show.call(this,cb);
-	if(cb == null) this.speaker.Show();
-}
-character.DialogueBox.prototype.Remove = function() {
-	main.Tile.prototype.Remove.call(this);
-	this.speaker.Remove();
-}
-character.DialogueBox.prototype.Load = function(scenes) {
-	this.chats = [];
-	this.speakers = [];
-	var _g1 = 0, _g = scenes.length;
-	while(_g1 < _g) {
-		var k = _g1++;
-		this.chats.push(scenes[k].text.content);
-		this.speakers.push(scenes[k].text.speaker);
-	}
-}
-character.DialogueBox.prototype.Chat = function(num) {
-	this.HTML("<p></p><p id=\"visual-novel-dialogue\">" + this.chats[num] + "</p>");
-	this.speaker.HTML(this.speakers[num]);
-}
-character.DialogueBox.prototype.Purge = function() {
-}
-character.DialogueBox.prototype.__class__ = character.DialogueBox;
-IntIter = function(min,max) {
-	if( min === $_ ) return;
-	this.min = min;
-	this.max = max;
-}
-IntIter.__name__ = ["IntIter"];
-IntIter.prototype.min = null;
-IntIter.prototype.max = null;
-IntIter.prototype.hasNext = function() {
-	return this.min < this.max;
-}
-IntIter.prototype.next = function() {
-	return this.min++;
-}
-IntIter.prototype.__class__ = IntIter;
 $_ = {}
 js.Boot.__res = {}
 js.Boot.__init();
@@ -856,16 +1181,7 @@ js.Boot.__init();
 		return isNaN(i);
 	};
 }
-{
-	js.Lib.document = document;
-	js.Lib.window = window;
-	onerror = function(msg,url,line) {
-		var f = js.Lib.onerror;
-		if( f == null )
-			return false;
-		return f(msg,[url+":"+line]);
-	}
-}
+if(typeof(haxe_timers) == "undefined") haxe_timers = [];
 {
 	var d = Date;
 	d.now = function() {
@@ -911,6 +1227,30 @@ js.Boot.__init();
 	d.__name__ = ["Date"];
 }
 {
+	String.prototype.__class__ = String;
+	String.__name__ = ["String"];
+	Array.prototype.__class__ = Array;
+	Array.__name__ = ["Array"];
+	Int = { __name__ : ["Int"]};
+	Dynamic = { __name__ : ["Dynamic"]};
+	Float = Number;
+	Float.__name__ = ["Float"];
+	Bool = { __ename__ : ["Bool"]};
+	Class = { __name__ : ["Class"]};
+	Enum = { };
+	Void = { __ename__ : ["Void"]};
+}
+{
+	js.Lib.document = document;
+	js.Lib.window = window;
+	onerror = function(msg,url,line) {
+		var f = js.Lib.onerror;
+		if( f == null )
+			return false;
+		return f(msg,[url+":"+line]);
+	}
+}
+{
 	/*!
  * jQuery JavaScript Library v1.5
  * http://jquery.com/
@@ -942,24 +1282,9 @@ js.Boot.__init();
 		}};
 	};
 }
-{
-	String.prototype.__class__ = String;
-	String.__name__ = ["String"];
-	Array.prototype.__class__ = Array;
-	Array.__name__ = ["Array"];
-	Int = { __name__ : ["Int"]};
-	Dynamic = { __name__ : ["Dynamic"]};
-	Float = Number;
-	Float.__name__ = ["Float"];
-	Bool = { __ename__ : ["Bool"]};
-	Class = { __name__ : ["Class"]};
-	Enum = { };
-	Void = { __ename__ : ["Void"]};
-}
-if(typeof(haxe_timers) == "undefined") haxe_timers = [];
 main.Element.ID = 0;
 main.Element.NAME = "InGidio-Tile-Element-" + Math.floor(10000 * Math.random());
 main.Element.TestCounter = 0;
-js.Lib.onerror = null;
 tools.Timer.TIME = haxe.Timer.stamp();
-character.VisualNovel.main()
+js.Lib.onerror = null;
+character.VisualNovelEditor.main()
