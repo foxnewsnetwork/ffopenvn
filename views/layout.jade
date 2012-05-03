@@ -23,6 +23,7 @@ html
 			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		})();
+		
 	body
 		.navbar 
 			.navbar-fixed-top
@@ -45,7 +46,7 @@ html
 									a#signin.dropdown-toggle(href="#signinmenu", data-toggle="dropdown") Sign In
 										b.caret
 									ul.dropdown-menu.dropdown-form
-										form.signin( action="/user/login", method="post" )
+										form( action="/user/login", method="post" )
 											li
 												input(type="text", placeholder="Email", name="user[email]")
 											li 
