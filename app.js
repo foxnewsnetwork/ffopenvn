@@ -24,6 +24,7 @@ app.configure(function(){
   app.use(express.session({ secret : " faggots r us" }) );
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.use(express.favicon(__dirname + "/public/images/favicon.ico") );
 });
 
 app.configure('development', function(){
@@ -39,7 +40,14 @@ app.configure('production', function(){
 */
 // Page manager
 app.get( '/', function(req, res){ 
-	res.render("pages/index.jade", { title : "FFOpenVN * alpha", count : 0, player : req.session.user } );
+	var useragent = req.headers['user-agent'];
+	var data = { 
+		title : "FFOpenVN", 
+		count : 0, 
+		player : req.session.user ,
+		laptop : "/images/splash-mac.png"
+	}; // end data
+	res.render("pages/index.jade", data );
 } ); //end get
 
 app.get( '/demo/:id', function(req, res){ 

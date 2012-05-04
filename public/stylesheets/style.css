@@ -11,11 +11,16 @@ a {
 	margin-right : 10%;
 	float : right;
 }
+img.logo { 
+	width : 30px;
+	height : 20px;
+	z-index : 999999;
+}
 ul.dropdown-form { 
 	border : 2px solid black;
 	background-color : rgb(55,55,59);
 	width : 20em;
-	height : 10em;
+	height : 14em;
 	padding : 1em;
 	list-style : none;
 }
@@ -23,7 +28,239 @@ ul.signup-form {
 	border : 2px solid black;
 	background-color : rgb(55,55,59);
 	width : 20em;
-	height : 17em;
+	height : 19em;
 	padding : 1em;
 	list-style : none;
+}
+.left-hand { 
+	width : 35%;
+	height : 98.55%;
+	float : left;
+	margin-top : -29%;
+	margin-left : -0.4%;
+
+}
+.splash-lefthand { 
+	background-image : url('/images/splash-hand-left-2.png');
+	background-size : 100% 100%;
+	background-repeat : no-repeat;
+	width : 50%;
+	height : 55%;
+	float : left;
+	margin-top : 38%;
+	margin-left : -20%;
+}
+.splash-waveleft { 
+	background-image : url('/images/splash-waves-left-c.png');
+	background-size : 100% 100%;
+	background-repeat : no-repeat;
+	position : absolute;
+}
+
+.waveleft-a { 
+	width : 3%;
+	height : 15%;
+	top : 53%;
+	left : 12%;
+}
+.waveleft-b { 
+	width : 6%;
+	height : 30%;
+	top : 45%;
+	left : 13%;
+}
+.waveleft-c { 
+	width : 12%;
+	height : 60%;
+	top : 30%;
+	left : 13%;
+}
+
+.right-hand { 
+	width : 35%;
+	height : 98.55%;
+	float : right;
+	margin-top : -29%;
+	margin-right : -0.4%;
+}
+.splash-righthand { 
+	background-image : url('/images/splash-hand-right-2.png');
+	background-size : 100% 100%;
+	background-repeat : no-repeat;
+	width : 50%;
+	height : 55%;
+	float : right;
+	margin-top : 38%;
+	margin-right : -20%;
+}
+.splash-waveright { 
+	background-image : url('/images/splash-waves-right-c.png');
+	background-size : 100% 100%;
+	background-repeat : no-repeat;
+	position : absolute;
+}
+.waveright-a { 
+	width : 3%;
+	height : 15%;
+	top : 53%;
+	right : 12%;
+}
+.waveright-b { 
+	width : 6%;
+	height : 30%;
+	top : 45%;
+	right : 13%;
+}
+.waveright-c { 
+	width : 12%;
+	height : 60%;
+	top : 30%;
+	right : 13%;
+}
+.backdrop { 
+	background-image : url('/images/graphic-bg.png');
+	background-repeat : repeat-x;
+	background-size : 100% 100%;
+	width : 100%;
+	height : 100%;
+	z-index : 0;
+	box-shadow : 0px 5px 5px #888888;
+}
+.cover1 { 
+	position : absolute;
+	top : 7%;
+	left : 0;
+	width : 99.9%;
+	height : 63.5%;
+	overflow : hidden;
+}
+.centertext { 
+	left : 34%;
+	position : absolute;
+}
+.bumpedown { 
+	margin-top : 35%;
+}
+ul.signup { 
+	list-style : none;
+}
+input.signup { 
+	width : 25em;
+	height : 2.2em;
+	margin-left : 1em;
+}
+a.obtrusive { 
+	margin-left : 1em;
+	margin-top : -0.65em;
+	width : 12em;
+}
+.stacks { 
+	box-shadow : 0px 3px 5px #888888;
+	text-align: center;
+	width : 107.75%;
+	margin-left : -3.9%;
+	margin-bottom : 2.5em;
+	padding-bottom : 1.5%;
+	background-color : rgb(252,252,252);
+}
+.centered { 
+	text-align : center;
+}
+.examples { 
+	color : #666666;
+}
+.arrow1 { 
+	width : 42px;
+	height : 79px;
+	background : url('/images/arrows.png') 0 0;
+}
+.checkmark { 
+	width : 37px;
+	height : 31px;
+	background-image : url('/images/check.png');
+	margin-top : 1em;
+	float : left;
+}
+ul.introduction { 
+	list-style : none;
+}
+li.introduction { 
+	width : 30em;
+	height : 8em;
+	background-color : rgb( 215, 233,213 );
+	opacity : 0.75;
+}
+li.introduction p { 
+	width : 25em;
+	float : right;
+	text-align : left;
+}
+li.introduction h4 { 
+	margin-top : 1em;
+	width : 25em;
+	float : right;
+	text-align : left;
+}
+.arrow2 { 
+	width : 42px;
+	height : 79px;
+	background : url('/images/arrows.png') 0px 110px;
+}
+.arrow3 { 
+	width : 83px;
+	height : 29px;
+	background : url('/images/arrows.png') 0px 30px;
+}
+.divider { 
+	width : 80%;
+	height : 0.25px;
+	margin-top : 2em;
+	margin-bottom: 2em;
+	border : 1px solid #999999;
+	box-shadow : 0 1px 3px #888888;
+	margin-left : 10%;
+}	
+.highlightbox{ 
+	padding-top : 2em;
+	padding-bottom : 2em;
+	padding-left : 2em;
+	border : 2px solid #999999;
+	box-shadow: 0 3px 5px #888888;
+	background-color : rgb(252, 252, 252);
+	height : 15em;
+}
+.icon2 { 
+	background : url('/images/tileicon02.png')   0 0;
+	background-repeat : no-repeat;
+	background-size : 100% 100%;
+	width : 110px;
+	height : 125px;
+}
+.icon3 { 
+	background : url('/images/tileicon03.png')   0 0;
+	background-size : 100% 100%;
+	background-repeat : no-repeat;
+	width : 110px;
+	height : 125px;
+}
+.icon4 { 
+	background : url('/images/tileicon04.png')   0 0;
+	background-size : 100% 100%;
+	background-repeat : no-repeat;
+	width : 110px;
+	height : 125px;
+}
+.icon6 { 
+	background : url('/images/tileicon06.jpg')   0 0;
+	background-size : 100% 100%;
+	background-repeat : no-repeat;
+	width : 110px;
+	height : 125px;
+}
+.icon8 { 
+	background : url('/images/upa.png')   0 0;
+	background-size : 100% 100%;
+	background-repeat : no-repeat;
+	width : 110px;
+	height : 125px;
 }

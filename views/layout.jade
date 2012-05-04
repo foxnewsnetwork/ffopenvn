@@ -29,7 +29,9 @@ html
 			.navbar-fixed-top
 				.navbar-inner
 					.container
-						a.brand(href="/") #{title}				
+						a.brand(href="/") 
+							img.logo(src="/images/logo.png", alt="ffopenvn logo")
+							#{title}				
 						ul.nav
 							- if (player )
 								li.active
@@ -48,15 +50,19 @@ html
 									ul.dropdown-menu.dropdown-form
 										form( action="/user/login", method="post" )
 											li
+												h3 Email
+											li
 												input(type="text", placeholder="Email", name="user[email]")
+											li 
+												h3 Password
 											li 
 												input(type="password", placeholder="Password", name="user[password]")
 											li
-												input(type="submit", value="Sign In")
+												input.btn.btn-primary(type="submit", value="Sign In")
 										
 											
 								li#signupmenu.dropdown
-									a#signup.dropdown-toggle(href="#signupmenu", data-toggle="dropdown") Sign Up
+									a#signup.dropdown-toggle(href="#signupmenu", data-toggle="dropdown") Request Invite
 										b.caret
 									ul.dropdown-menu.signup-form
 										form.signup( action="/user", method="post" )
@@ -73,7 +79,7 @@ html
 											li
 												input(type="password", placeholder="Password", name="user[password]")
 											li
-												input(type="submit", value="Sign In")
-										
+												input.btn.btn-primary(type="submit", value="Sign In")
+								
 
 		!= body

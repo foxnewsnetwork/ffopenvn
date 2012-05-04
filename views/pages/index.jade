@@ -1,16 +1,118 @@
+style(type="text/css")
+	.splash-laptop{ 
+		background-image : url('#{laptop}');
+		background-size : 100% 100%;
+		width : 35%;
+		height : 80%;
+		margin-left : 30%;
+		margin-top : 5%;
+	}
+	
+.cover1.backdrop
+	.centertext
+			h1 Visual Novels on the Cloud
+				h5.centered Where imagination meets everything else
+	.splash-laptop
+	.right-hand
+		.splash-righthand		
+		.splash-waveright.waveright-a
+		.splash-waveright.waveright-b
+		.splash-waveright.waveright-c
+	.left-hand
+		.splash-lefthand		
+		.splash-waveleft.waveleft-a
+		.splash-waveleft.waveleft-b
+		.splash-waveleft.waveleft-c
+	
+.stacks.bumpedown
+	ul.signup
+		li.signup
+			input#name.signup(type="text", placeholder="Name...")
+			input#email.signup(type="text", placeholder="Email...")
+		li.signup
+			input#password.signup(type="password", placeholder="Password...")
+			a#submit.btn.btn-primary.btn-large.obtrusive(href="#") Request Invite
 .container
 	.row
-		.h2 
-	.hero-unit
-		h1 #{title}
-		p Welcome back. Pardon the lack of dust, we're too early to have built up any.
-		p
-			a.btn.same(href="/story?cat=0") Fan Fiction
-			a.btn.same(href="/story?cat=1") Original
-			a.btn.same(href="/story/new") New Story
-		p	
-			button#playdemo.btn.btn-primary.same Play Demo
-			#signupbox
-				input#email(placeholder="example@me.com")
-				button#signup.btn.btn-primary.large Signup!
-			
+		.span12.centered
+			h2 Share your fantasy fiction world.
+			h2 But building a VN is a lot of work.
+			h1.examples There is... character art, planning, backgrounds,
+			h2.examples audio, BGM, coloring, CGs,
+			h3.examples coordination, monetization, story,
+			h4.examples distribution, platform-issues, feedback
+			h6.examples QC, editing, translation...
+	.row
+		br
+		.span12.centered
+			h1 On FFOpenVN, things are easier.
+				.arrow1( style="float : right;" )
+		.span6.centered
+			ul.introduction
+				li.introduction
+					.checkmark
+					h4 Immediate feedback
+					p Who is everyone's favorite character? What do the readers think? FFOpenVN keeps track for you all your readers and their feedback.
+				li.introduction
+					.checkmark
+					h4 Easy money
+					p FFOpenVN gives you the option of designating shoppable areas so you can sell real stuff through your VNs and make money doing it.
+				li.introduction
+					.checkmark
+					h4 It's still yours
+					p It's your story and it always will be. FFOpenVN will drive readers to you, but we don't claim to own what belongs to you.
+		.span6.centered
+			ul.introduction
+				li.introduction
+					.checkmark
+					h4 Open-transparency artwork
+					p Like open-source for code. On FFOpenVN, If you see artwork you like, fork it and use it in your own novel. Credits and attribution is taken care of by us.
+				li.introduction
+					.checkmark	
+					h4 No programming required
+					p FFOpenVN takes care of the low level coding so you don't have to (unless you really want to).
+				li.introduction
+					.checkmark
+					h4 Universally accessible
+					p Access FFOpenVN through your phone, at work, or through API!
+	.row
+		.arrow2(style="position : absolute; top : 1250px; left : 200px;")
+		.arrow1(style="position : absolute; top : 1500px; left : 650px;")
+		.arrow3(style="position : absolute; top : 1725px; left : 650px;")
+		.divider.centered
+		.span12.centered
+			h1 Forked works on FFOpenVN
+			br
+		.span3
+			.icon2
+		.span2
+			.icon3
+		.span2
+			.icon4
+		.span2
+			.icon6
+		.span3
+			.icon8		
+	.row
+		.divider.centered
+		.span6.highlightbox
+			h1 Join beta
+			h2  Early accounts get...
+			ul
+				li 
+					h3 Significantly more content storage room
+				li 
+					h3 Extra private VNs
+				li 
+					h3 Other benefits
+		.span5.highlightbox
+			#signupbox-bottom
+				ul.signup(style="margin-left: -1em; margin-top: 0.5em;")
+					li.signup
+						input#name.signup(type="text", placeholder="Name...")
+					li.signup
+						input#email.signup(type="text", placeholder="Email...")
+					li.signup
+						input#password.signup(type="password", placeholder="Password...")
+					li.signup(style="margin-top: 1em;")
+						a#submit.btn.btn-primary.btn-large.obtrusive(href="#") Request Invite
