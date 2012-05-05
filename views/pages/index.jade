@@ -1,3 +1,4 @@
+script(type="text/javascript", src="/javascripts/pages/index.js")
 style(type="text/css")
 	.splash-laptop{ 
 		background-image : url('#{laptop}');
@@ -7,7 +8,12 @@ style(type="text/css")
 		margin-left : 30%;
 		margin-top : 5%;
 	}
-	
+	.hiddencontent { 
+		visibility : hidden;
+	}
+.hiddencontent	
+	input#hiddenheader.hiddencontent(type="text", value="#{header}")
+	input#hiddenreferer.hiddencontent(type="text", value="#{referer}")
 .cover1.backdrop
 	.centertext
 			h1 Visual Novels on the Cloud
@@ -25,13 +31,16 @@ style(type="text/css")
 		.splash-waveleft.waveleft-c
 	
 .stacks.bumpedown
-	ul.signup
-		li.signup
-			input#name.signup(type="text", placeholder="Name...")
-			input#email.signup(type="text", placeholder="Email...")
-		li.signup
-			input#password.signup(type="password", placeholder="Password...")
-			a#submit.btn.btn-primary.btn-large.obtrusive(href="#") Request Invite
+	#signupbox-top
+		ul.signup
+			form#signup2( action="/user", method="post")
+				hidden#referer2.hiddencountent(type="text", value="#{referer}", name="user[referer]")
+				li.signup
+					input#name2.signup(type="text", placeholder="Name...", name="user[name]")
+					input#email2.signup(type="text", placeholder="Email...", name="user[email]")
+				li.signup
+					input#password2.signup(type="password", placeholder="Password...", name="user[password]")
+					input#submit2.btn.btn-primary.btn-large.obtrusive(type="submit", value="Request Invite")
 .container
 	.row
 		.span12.centered
@@ -108,11 +117,13 @@ style(type="text/css")
 		.span5.highlightbox
 			#signupbox-bottom
 				ul.signup(style="margin-left: -1em; margin-top: 0.5em;")
-					li.signup
-						input#name.signup(type="text", placeholder="Name...")
-					li.signup
-						input#email.signup(type="text", placeholder="Email...")
-					li.signup
-						input#password.signup(type="password", placeholder="Password...")
-					li.signup(style="margin-top: 1em;")
-						a#submit.btn.btn-primary.btn-large.obtrusive(href="#") Request Invite
+					form#signup3( action="/user", method="post" )
+						hidden#referer2.hiddencountent(type="text", value="#{referer}", name="user[referer]")
+						li.signup
+							input#name3.signup(type="text", placeholder="Name...", name="user[name]")
+						li.signup
+							input#email3.signup(type="text", placeholder="Email...", name="user[email]")
+						li.signup
+							input#password.signup(type="password", placeholder="Password...", name="user[password]")
+						li.signup(style="margin-top: 1em;")
+							input#submit3.btn.btn-primary.btn-large.obtrusive(type="submit", value="Request Invite")

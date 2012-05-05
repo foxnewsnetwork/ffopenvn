@@ -10,20 +10,11 @@ html
 	script(type="text/javascript", src="/bootstrap/js/bootstrap.js")
 	script(type="text/javascript", src="/socket.io/socket.io.js")
 	script(type="text/javascript", src="/javascripts/flotile/tooltip.js")
+	script(type="text/javascript", src="/javascripts/ga.js")
 	script(type="text/javascript", src="/javascripts/flotile/flotile.js")
 	script(type="text/javascript", src="/javascripts/flotile/flotile-bridge.js")
 	script(type='text/javascript")
 		var socket = io.connect('http://localhost:3000');
-		var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', 'UA-31007838-1']);
-		_gaq.push(['_trackPageview']);
-
-		(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		})();
-		
 	body
 		.navbar 
 			.navbar-fixed-top
@@ -60,7 +51,7 @@ html
 											li
 												input.btn.btn-primary(type="submit", value="Sign In")
 										
-											
+							- if ( 0 == 1 )				
 								li#signupmenu.dropdown
 									a#signup.dropdown-toggle(href="#signupmenu", data-toggle="dropdown") Request Invite
 										b.caret
@@ -80,6 +71,4 @@ html
 												input(type="password", placeholder="Password", name="user[password]")
 											li
 												input.btn.btn-primary(type="submit", value="Sign In")
-								
-
 		!= body

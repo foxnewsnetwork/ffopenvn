@@ -2,7 +2,26 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+#flash { 
+	border : 2px solid yellow;
+	background-color : rgb(4, 4, 4);
+	text-align : center;
+	font : 2em;
+	width : 30em;
+	height : 15em;
+}
+.flash { 
+	border : 2px solid yellow;
+	background-color : rgb(234, 245, 252);
+	text-align : center;
+	font : 2em;
+	width : 90%;
+	margin-left : 5%;
+	padding-top : 1em;
+	padding-bottom : 1em;
+	padding-left : 0.5em;
+	padding-right : 0.5em;
+}
 a {
   color: #00B7FF;
 }
@@ -139,7 +158,7 @@ ul.signup-form {
 	position : absolute;
 }
 .bumpedown { 
-	margin-top : 35%;
+	margin-top : 28em;
 }
 ul.signup { 
 	list-style : none;

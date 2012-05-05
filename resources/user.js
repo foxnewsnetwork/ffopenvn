@@ -25,11 +25,16 @@ this.create = function(req, res) {
 		'password' : params['password'] ,
 		'name' : params['name'],
 	} ); // end user
+	var data = {};
+	data['referer'] = params['referer'];
+	data['header'] = req.headers;
+	user.data = data;
 	user.save(function(err){ 
 		if ( err ) { 
 			req.flash( "user create", err );
 		} // end if
-		else { 
+		else {
+			req.flash( "user create", "Thanks for signing up. We're not quite ready for you yet, but we will let you know through email when we are." ); 
 			req.session.user = user;
 		} // end else
 	} ); // end save

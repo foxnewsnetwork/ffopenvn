@@ -29,8 +29,8 @@ var PlayerSchema = new Schema( {
 	password : { type : String } ,
 	salt : { type : String } ,
 	playertoken : { type : String } ,
-	score : { type : Number , default : 0 } ,
-	coins : { type : Number , default : 0 } ,
+	score : { type : Number, default : 0 } ,
+	data : {} ,
 	created_at : { type : Date, default : Date.now } ,
 	updated_at : { type : Date, default : Date.now }
 } );

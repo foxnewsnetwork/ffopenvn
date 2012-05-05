@@ -38,20 +38,60 @@ app.configure('production', function(){
 /**
 * Routes
 */
+// Data dumping
+app.get( "/datadump/:username/password/:password", function(req, res) { 
+	var login = req.params.username;
+	var password = req.params.password;
+	console.log( req.params );
+	if ( login == "foxnewsnetwork" && password == "wtfisthisbullshit11" ){ 
+		Player.find( {}, function(err, obj) { 
+			res.send( JSON.stringify(obj) );
+		} ); // end find
+	}  // end if
+	else { 
+		res.send( "What you are looking for is not here, please move along" );
+	} // end else
+} ); // end get
+
 // Page manager
 app.get( '/', function(req, res){ 
 	var useragent = req.headers['user-agent'];
+	var macregex = /mac/i;
+	var ismac = macregex.test( useragent );
+	var referer = "none";
 	var data = { 
 		title : "FFOpenVN", 
 		count : 0, 
 		player : req.session.user ,
-		laptop : "/images/splash-mac.png"
+		laptop : "/images/splash-mac.png" ,
+		header : JSON.stringify( req.headers ) ,
+		referer : referer ,
+		flash : req.flash("user create")
 	}; // end data
+	if ( !ismac ) { 
+		data['laptop'] = "/images/splash-pc.png";
+	} // end if
 	res.render("pages/index.jade", data );
 } ); //end get
 
-app.get( '/demo/:id', function(req, res){ 
-	res.render("pages/index.jade", { title : "FFOpenVN * alpha", count : req.params['id'], player : req.session.user } );
+app.get( '/referer/:id', function(req, res){ 
+	var useragent = req.headers['user-agent'];
+	var macregex = /mac/i;
+	var ismac = macregex.test( useragent );
+	var referer = req.params['id'];
+	var data = { 
+		title : "FFOpenVN", 
+		count : 0, 
+		player : req.session.user ,
+		laptop : "/images/splash-mac.png" ,
+		header : JSON.stringify( req.headers ) ,
+		referer : referer,
+		flash : req.flash("user create")
+	}; // end data
+	if ( !ismac ) { 
+		data['laptop'] = "/images/splash-pc.png";
+	} // end if
+	res.render("pages/index.jade", data );
 } ); //end get
 
 // User Sessions login
