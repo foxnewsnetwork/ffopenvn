@@ -1,0 +1,129 @@
+﻿script(type="text/javascript", src="/javascripts/pages/index.js")
+style(type="text/css")
+	.splash-laptop{ 
+		background-image : url('#{laptop}');
+		background-size : 100% 100%;
+		width : 35%;
+		height : 80%;
+		margin-left : 30%;
+		margin-top : 5%;
+	}
+	.hiddencontent { 
+		visibility : hidden;
+	}
+.hiddencontent	
+	input#hiddenheader.hiddencontent(type="text", value="#{header}")
+	input#hiddenreferer.hiddencontent(type="text", value="#{referer}")
+.cover1.backdrop
+	.centertext
+			h1 ネット上でのビジュアルノベル 
+				h5.centered 幻想と想像の出逢い
+	.splash-laptop
+	.right-hand
+		.splash-righthand		
+		.splash-waveright.waveright-a
+		.splash-waveright.waveright-b
+		.splash-waveright.waveright-c
+	.left-hand
+		.splash-lefthand		
+		.splash-waveleft.waveleft-a
+		.splash-waveleft.waveleft-b
+		.splash-waveleft.waveleft-c
+	
+.stacks.bumpedown
+	#signupbox-top
+		ul.signup
+			form#signup2( action="/user", method="post")
+				hidden#referer2.hiddencountent(type="text", value="#{referer}", name="user[referer]")
+				li.signup
+					input#name2.signup(type="text", placeholder="名...", name="user[name]")
+					input#email2.signup(type="text", placeholder="Eーメル...", name="user[email]")
+				li.signup
+					input#password2.signup(type="password", placeholder="パスワード...", name="user[password]")
+					input#submit2.btn.btn-primary.btn-large.obtrusive(type="submit", value="INVITE　リクエスト")
+.container
+	.row
+		.span12.centered
+			h2 脳内の幻想世界、今解き放とう.
+			h2 でも、ビジュアルノベルを創るのは大変だ.
+			h1.examples 例えば... 絵, 計画, 背景,
+			h2.examples オーディオ, 音楽, 色つけ, CG,
+			h3.examples 協力, 金, プロット,
+			h4.examples ディストリビューション, プラットフォームの問題, 読者意見
+			h6.examples QC, 仕上げ, 翻訳...
+	.row
+		br
+		.span12.centered
+			h1 FFOpenVN　で、その難題はすべて簡単に解決できる.
+				.arrow1( style="float : right;" )
+		.span6.centered
+			ul.introduction
+				li.introduction
+					.checkmark
+					h4 即座にフィードバック
+					p みんなのお嫁はだれか? 読者はどう思ってるか? FFOpenVN はファンの意見をまとめてあげます。
+				li.introduction
+					.checkmark
+					h4 簡単に銭を
+					p FFOpenVN で、ネット買い物通販所を示せる。読者があそこに何かを買ったら、稼げる。
+				li.introduction
+					.checkmark
+					h4 君の物
+					p 君の物語はいつでも君の物のまま。FFOpenVN　は読者を渡すけど、物語の権利は君だけに持っている。
+		.span6.centered
+			ul.introduction
+				li.introduction
+					.checkmark
+					h4 Open-transparency 絵
+					p Open-source の様。 FFOpenVN　で, 気に入りの作品が見つけたら, フォークして、自分の小説で使える。 
+				li.introduction
+					.checkmark	
+					h4 現代魔法　必要はない
+					p FFOpenVN はすべてのプログラミングをやってきたから、気が向かないままする必要はまったくない。
+				li.introduction
+					.checkmark
+					h4 普遍的にアクセス
+					p 携帯、PC、API、など何でも　FFOpenVN の　VN　を読める。
+	.row
+		.arrow2(style="position : absolute; top : 1250px; left : 200px;")
+		.arrow1(style="position : absolute; top : 1500px; left : 650px;")
+		.arrow3(style="position : absolute; top : 1725px; left : 650px;")
+		.divider.centered
+		.span12.centered
+			h1 FFOpenVN　で　フォークされた作品
+			br
+		.span3
+			.icon2
+		.span2
+			.icon3
+		.span2
+			.icon4
+		.span2
+			.icon6
+		.span3
+			.icon8		
+	.row
+		.divider.centered
+		.span6.highlightbox
+			h1 Join beta！
+			h2  今しかもらえないメリットは...
+			ul
+				li 
+					h3 著しく多いストレージ
+				li 
+					h3 番外のプライベートVNs
+				li 
+					h3 その他
+		.span5.highlightbox
+			#signupbox-bottom
+				ul.signup(style="margin-left: -1em; margin-top: 0.5em;")
+					form#signup3( action="/user", method="post" )
+						hidden#referer2.hiddencountent(type="text", value="#{referer}", name="user[referer]")
+						li.signup
+							input#name3.signup(type="text", placeholder="名...", name="user[name]")
+						li.signup
+							input#email3.signup(type="text", placeholder="Eメル...", name="user[email]")
+						li.signup
+							input#password.signup(type="password", placeholder="パスワード...", name="user[password]")
+						li.signup(style="margin-top: 1em;")
+							input#submit3.btn.btn-primary.btn-large.obtrusive(type="submit", value="INVITE　リクエスト")
