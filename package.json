@@ -9,6 +9,7 @@
     , "mongoose" : "2.6.0"
     , "MD5" : "0.0.0"
     , "forever" : "0.8.5"
-    , "express-resource" : "0.2.4"
+    , "express-resource" : "0.2.4" 
+    , "geoip-lite" : "1.0.6"
   }
 }

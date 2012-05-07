@@ -12,6 +12,9 @@ var Player = require( "./original_modules/player.js" ).Player;
 // suckit.IO for RESTful socket.IO usage
 var suck = require("./original_modules/suckitio.js").listen(app);
 
+// GeoIP
+var geoip = require("geoip-lite");
+
 /**
 * Server Configuration
 */
@@ -55,6 +58,7 @@ app.get( "/datadump/:username/password/:password", function(req, res) {
 
 // Page manager
 app.get( '/', function(req, res){ 
+	
 	var useragent = req.headers['user-agent'];
 	var macregex = /mac/i;
 	var ismac = macregex.test( useragent );
@@ -71,7 +75,19 @@ app.get( '/', function(req, res){
 	if ( !ismac ) { 
 		data['laptop'] = "/images/splash-pc.png";
 	} // end if
-	res.render("pages/index.jade", data );
+	
+	var ip = req.connection.remoteAddress;
+	if ( (/^127/).test(ip) ) { 
+		res.render("pages/index.ja.jade", data );
+		return;
+	} // end if
+	var country = geo['country'];
+	if ( (/japan/i).test( country ) ) { 
+		res.render( "pages/index.ja.jade", data );
+	} // end if
+	else { 
+		res.render("pages/index.jade", data );
+	} // end else
 } ); //end get
 
 app.get( '/referer/:id', function(req, res){ 
