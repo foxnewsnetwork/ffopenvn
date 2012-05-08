@@ -5,14 +5,16 @@ var Player = require( "../original_modules/player.js" ).Player;
 
 this.show = function(req, res) { 
 	var params = req.params;
+	var usertab = params['usertab'] || false;
+	
 	Player.findOne( { _id : params.user }, function( err, user ) { 
 		if ( user == undefined ) { 
-			// TODO: handle error
+			res.render( "error/player.jade", { title : "FFOshitVN", player : false } );
 		} // end if
 		else { 
 			var session_user = req.session.user;
 			var flag = session_user._id == user._id;
-			res.render("users/show.jade", { title : "FFOpenVN", user : user, flag : flag } );
+			res.render("users/show.jade", { title : "FFOpenVN" , player : user, usertab : usertab, flag : flag } );
 		} // end else
 	} ); // findOne
 }; // end show

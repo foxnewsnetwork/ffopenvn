@@ -1,0 +1,44 @@
+style(type="text/css)
+.usertoolbar
+	.centerarrow
+	ul.toolbaricon
+		li.toolbaricon
+			a(href="/story")
+				.toolbarpic.toolbar1
+				h4.toolbartext Novels
+		li.toolbaricon
+			a(href="/story")
+				.toolbarpic.toolbar2
+				h4.toolbartext Feed
+		li.toolbaricon
+			a(href="/story")
+				.toolbarpic.toolbar3
+				h4.toolbartext Team
+		li.toolbaricon
+			a(href="/story")
+				.toolbarpic.toolbar4
+				h4.toolbartext ???
+		li.toolbaricon
+			a(href="/story")
+				.toolbarpic.toolbar5
+				h4.toolbartext ???
+		li.toolbaricon
+			a(href="/story")
+				.toolbarpic.toolbar6
+				h4.toolbartext Profile
+.container
+	.row
+		h1.centered(style="margin-top : 2%;") [Username]
+	.row
+		#usercontent.centered
+			-if ( usertab )
+				- if ( usertab == "feed" )
+					include partials/feed.jade
+				- if ( usertab == "team" )
+					include partials/team.jade
+				- if ( usertab == "profile" )
+					include partials/profile.jade	
+				- if ( usertab == "update" )
+					include partials/update.jade
+			-else
+				include partials/featured.jade

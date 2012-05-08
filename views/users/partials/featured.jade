@@ -1,0 +1,73 @@
+style(text="type/css")
+	ul.featuredtabs { 
+		list-style : none;
+	}
+	li.featuredtabs { 
+		display : inline-block;
+		width : 240px;
+		height : 180px;
+		margin-right : 1em;
+	}
+	.featuredtabicon { 
+		background-size : 100% 100%;
+		width : 95px;
+		height : 65px;
+		margin-left : 72.5px;
+		margin-top : 2em;
+	}
+	.featuredtext { 
+		padding-left : 1em;
+		padding-right : 1em;
+	}
+	.featuredtabs1 { 
+		background-image : url("/images/tour-collaboration.png");
+	}
+	.featuredtabs2 { 
+		background-image : url("/images/tour-email.png");
+	}
+	.featuredtabs3 { 
+		background-image : url("/images/tour-mac.png");
+	}
+	.featuredtabs4 { 
+		background-image : url("/images/tour-updates.png");
+	}
+	.featuredtabs5 { 
+		background-image : url("/images/upa.png");
+	}
+	.featuredtabs6 { 
+		background-image : url("/images/upa.png");
+	}
+.span12
+	ul.featuredtabs
+		li.featuredtabs
+			a.featuredtabs(href="/user/1?usertab=team")
+				.featuredtabicon.featuredtabs1				
+				h3.featuredtext Team 
+					img(alt="go arrow", src="/images/tour-goarrow.png")
+		li.featuredtabs
+			a.featuredtabs(href="/user/1?usertab=novel")
+				.featuredtabicon.featuredtabs2				
+				h3.featuredtext Visual Novels 
+					img(alt="go arrow", src="/images/tour-goarrow.png")
+		li.featuredtabs
+			a.featuredtabs(href="/user/1?usertab=profile")
+				.featuredtabicon.featuredtabs3
+				h3.featuredtext Profile 
+					img(alt="go arrow", src="/images/tour-goarrow.png")
+.span12			
+	ul.featuredtabs
+		li.featuredtabs
+			a.featuredtabs(href="/user/1?usertab=update")
+				.featuredtabicon.featuredtabs4
+				h3.featuredtext Update Feeds
+					img(alt="go arrow", src="/images/tour-goarrow.png")
+		li.featuredtabs
+			a.featuredtabs(href="/user/1?usertab=")
+				.featuredtabicon.featuredtabs5
+				h3.featuredtext Not Sure 
+					img(alt="go arrow", src="/images/tour-goarrow.png")
+		li.featuredtabs
+			a.featuredtabs(href="/user/1?usertab=")
+				.featuredtabicon.featuredtabs6
+				h3.featuredtext Not Sure
+					img(alt="go arrow", src="/images/tour-goarrow.png")
