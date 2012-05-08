@@ -75,7 +75,6 @@ app.get( '/', function(req, res){
 	if ( !ismac ) { 
 		data['laptop'] = "/images/splash-pc.png";
 	} // end if
-	
 	var ip = req.connection.remoteAddress;
 	if ( (/^127/).test(ip) ) { 
 		res.render("pages/index.ja.jade", data );
@@ -116,10 +115,12 @@ app.post("/user/login", function(req, res) {
 	Player.login( { email : params['email'], password : params['password'] }, function(err, user) { 
 		if ( err ) { 
 			// TODO: handle error
+			console.log(err);
 			req.flash( "login", "Incorrect login info, sorry buddy" );
 		} // end if
 		else { 
 			req.session.user = user;
+			console.log(user);
 			req.flash( "login", "Login successful" );
 		} // end else
 		res.redirect("back");

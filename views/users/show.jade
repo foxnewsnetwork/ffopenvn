@@ -1,34 +1,7 @@
-style(type="text/css)
-.usertoolbar
-	.centerarrow
-	ul.toolbaricon
-		li.toolbaricon
-			a(href="/story")
-				.toolbarpic.toolbar1
-				h4.toolbartext Novels
-		li.toolbaricon
-			a(href="/story")
-				.toolbarpic.toolbar2
-				h4.toolbartext Feed
-		li.toolbaricon
-			a(href="/story")
-				.toolbarpic.toolbar3
-				h4.toolbartext Team
-		li.toolbaricon
-			a(href="/story")
-				.toolbarpic.toolbar4
-				h4.toolbartext ???
-		li.toolbaricon
-			a(href="/story")
-				.toolbarpic.toolbar5
-				h4.toolbartext ???
-		li.toolbaricon
-			a(href="/story")
-				.toolbarpic.toolbar6
-				h4.toolbartext Profile
+include partials/toolbar.jade
 .container
 	.row
-		h1.centered(style="margin-top : 2%;") [Username]
+		h1.centered(style="margin-top : 2%;") &raquo; #{player.name}
 	.row
 		#usercontent.centered
 			-if ( usertab )
@@ -40,5 +13,7 @@ style(type="text/css)
 					include partials/profile.jade	
 				- if ( usertab == "update" )
 					include partials/update.jade
+				- if ( usertab == "novel" )
+					include partials/novel.jade
 			-else
 				include partials/featured.jade

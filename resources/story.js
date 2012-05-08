@@ -8,19 +8,32 @@ var Story = storySchema.Story;
 * Controller section
 */
 this.new = function(req, res){ 
-	res.render("stories/new.jade", { title : "FFOpenVN", player : req.session.user } );
+	if ( req.session.user ) { 
+		res.render("stories/new.jade", { title : "FFOpenVN", player : req.session.user } );
+	} // end if
+	else { 
+		res.render("error/login.jade", { title : "FFOpenVN", player : false } );
+	} // end else
 }; // end new
 
 this.destroy = function(req, res){ }; // end destroy
 
 this.create = function(req, res){ 
+	var user = req.session.user;
+	console.log( user );
+	if ( user == undefined ) { 
+		console.log( "You have to exist before you can write visual novels" );
+		res.redirect("back");
+		return;
+	} // end if
 	var params = req.body.story;
 	console.log("Create request received in Story: " );
 	console.log( params );
 	var story = new Story( {
 		title : params.title,
 		cover : params.cover ,
-		category : params.parent == "0" ? params.parent : "Original"
+		category : params.parent == "0" ? params.parent : "Original" ,
+		owner : user._id
 	} ); // end Story
 	story.save( function(err){
 		if(err) { 

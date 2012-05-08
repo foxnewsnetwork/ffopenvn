@@ -1,0 +1,31 @@
+style(type="text/css")
+	ul.storylist { 
+		list-style : none;
+	}
+	li.storylist { 
+		width : 100%;
+		background-color : rgb(223, 249, 233);
+		padding-left : 2em;
+		margin-left : -2em;
+	}
+	.lefted { 
+		text-align : left;
+	}
+.span7.lefted
+	.label
+		h1 Story List 
+			a.btn.btn-primary(href="/story/new", style="margin-top : -5px;") New Story &raquo;
+	ul.storylist
+		-for (var k = 0; k < stories.length; k++ )
+			-if ( k%2 == 1 )
+				li.storylist(style="background-color : rgb(223, 233, 249);")
+					a.storylist(href="/story/#{stories[k]._id}")
+						h3 #{player.name} &raquo; #{stories[k].title}
+			-else
+				li.storylist 
+					a.storylist(href="/story/#{stories[k]._id}")
+						h3 #{player.name} &raquo; #{stories[k].title}
+.span5.lefted
+	.label
+		h1 Latest Reviews
+	p Sorry, not implemented yet

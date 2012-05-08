@@ -2,19 +2,36 @@
 * Standard User resource
 */
 var Player = require( "../original_modules/player.js" ).Player;
+var Story = require( "../original_modules/story.js" ).Story;
 
 this.show = function(req, res) { 
 	var params = req.params;
-	var usertab = params['usertab'] || false;
-	
-	Player.findOne( { _id : params.user }, function( err, user ) { 
+	var query = req.query;
+	var usertab = query['usertab'] || false;
+	// change the search criteria back to  { _id : params.user } 
+	Player.findOne( { email : "foxnewsnetwork@gmail.com" }, function( err, user ) { 
 		if ( user == undefined ) { 
 			res.render( "error/player.jade", { title : "FFOshitVN", player : false } );
 		} // end if
 		else { 
 			var session_user = req.session.user;
-			var flag = session_user._id == user._id;
-			res.render("users/show.jade", { title : "FFOpenVN" , player : user, usertab : usertab, flag : flag } );
+			switch (usertab) { 
+				case 'novel' :
+					Story.find( { owner : user._id }, function( err, stories ) { 
+						if ( err ) { 
+							console.log( err );
+							res.render( "error/database.jade", { title : "FFOshitVN", player : false } );
+						} // end if 
+						else { 
+							console.log( stories );
+							res.render( "users/show.jade", { title : "FFOpenVN", player : user, usertab : usertab, stories : stories } );
+						} // end else
+					} ); // end Story.find
+					return;
+				default :
+					res.render("users/show.jade", { title : "FFOpenVN" , player : user, usertab : usertab } );
+					return;		
+			} // end switch
 		} // end else
 	} ); // findOne
 }; // end show
