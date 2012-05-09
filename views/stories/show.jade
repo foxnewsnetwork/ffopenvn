@@ -4,11 +4,25 @@ style(type="text/css")
 		visibility : hidden;
 		opacity : 0;
 	}
+include partials/toolbar.jade
 .container
-	.hero-unit
-		#story
-			h1 #{story.title}
-			p TODO: replace this with something cool
-		button#startnovel.btn.btn-primary.large Begin
-		a.btn.btn-primary.large(href="../story/#{story._id}/edit" ) Edit
-		input#storyid.invisible-stuff( value="#{story._id}" )
+	.row
+		.span12(style="margin-top : 2em;")
+			h1.centered #{story.title}
+	.row
+		#usercontent.centered
+			-if ( usertab )
+				- if ( usertab == "team" )
+					include partials/team.jade
+				- if ( usertab == "reviews" )
+					include partials/reviews.jade
+				- if ( usertab == "forks" )
+					include partials/forks.jade	
+				- if ( usertab == "credits" )
+					include partials/credits.jade
+				- if ( usertab == "analytics" )
+					include partials/analytics.jade
+				-if ( usertab == "editor" )
+					include partials/editor.jade
+			-else
+				include partials/featured.jade

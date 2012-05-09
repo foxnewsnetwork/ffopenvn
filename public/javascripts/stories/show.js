@@ -1,5 +1,5 @@
 socket.on( "connection", function(id) { 
-	$("#startnovel").click(function() { 
+	$("#novelstart").click(function() { 
 		var data = { sid : $("#storyid").val() };
 		socket.emit( "story show connection" , data );		
 	} ); // end startnovel
@@ -14,7 +14,7 @@ socket.on( "story show connection", function(rawdata) {
 	} // end for
 	myvn.Load(data);
 	myvn.Click(function(){ myvn.Next(); } );
-	
+
 	myvn.End( function() { 
 		myvn.Scene(0);
 	} ); // end End

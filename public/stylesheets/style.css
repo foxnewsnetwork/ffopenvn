@@ -9,6 +9,9 @@ body {
 	width : 30em;
 	height : 15em;
 }
+.hiddencontent { 
+	visibility : hidden;
+}
 .flash { 
 	border : 2px solid yellow;
 	background-color : rgb(234, 245, 252);
@@ -171,6 +174,10 @@ a.obtrusive {
 	margin-left : 1em;
 	margin-top : -0.65em;
 	width : 12em;
+}
+button.obtrusive { 
+	width : 14em;
+	margin-top : -0.45em;
 }
 .stacks { 
 	box-shadow : 0px 3px 5px #888888;
@@ -336,4 +343,23 @@ li.toolbaricon {
 .debug { 
 	border : 2px solid red;
 }
-
+ul.featuredtabs { 
+	list-style : none;
+}
+li.featuredtabs { 
+	display : inline-block;
+	width : 240px;
+	height : 180px;
+	margin-right : 1em;
+}
+.featuredtabicon { 
+	background-size : 100% 100%;
+	width : 95px;
+	height : 65px;
+	margin-left : 72.5px;
+	margin-top : 2em;
+}
+.featuredtext { 
+	padding-left : 1em;
+	padding-right : 1em;
+}

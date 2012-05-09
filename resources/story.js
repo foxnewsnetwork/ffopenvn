@@ -58,10 +58,12 @@ this.edit = function(req, res){
 this.show = function(req, res){ 
 	var params = req.params;
 	var ip = req.connection.remoteAddress;
+	var query = req.query;
+	var usertab = query['usertab'] || false;
 	Story.findOne( { _id : params.story }, function(err,obj){ 
 		console.log( "Story Show called against " + params.story + " , found object: " );
 		console.log( params );
-		res.render("stories/show.jade", { title : "FFOpenVN", story : obj, player : req.session.user } );	
+		res.render("stories/show.jade", { title : "FFOpenVN", story : obj, player : req.session.user, usertab : usertab } );	
 	} ); // end findOne
 }; // end show
 
