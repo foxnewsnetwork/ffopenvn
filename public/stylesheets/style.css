@@ -149,10 +149,10 @@ ul.signup-form {
 }
 .cover1 { 
 	position : absolute;
-	top : 7%;
+	top : 3.5em;
 	left : 0;
 	width : 99.9%;
-	height : 63.5%;
+	height : 29.5em;
 	overflow : hidden;
 }
 .centertext { 

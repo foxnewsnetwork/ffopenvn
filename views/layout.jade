@@ -7,6 +7,7 @@ html
 	link(href="/stylesheets/extensions.css", media="screen", rel="stylesheet", type="text/css")
 	link(href="/stylesheets/visualnovel.css", media="screen", rel="stylesheet", type="text/css")	
 	script(type="text/javascript", src="/javascripts/jquery/jquery.js")
+	script(type="text/javascript", src="/javascripts/application.js")
 	script(type="text/javascript", src="/bootstrap/js/bootstrap.js")
 	script(type="text/javascript", src="/socket.io/socket.io.js")
 	script(type="text/javascript", src="/javascripts/flotile/tooltip.js")
@@ -16,7 +17,7 @@ html
 	script(type='text/javascript")
 		var socket = io.connect('http://localhost:3000');
 	body
-		.navbar 
+		.navbar
 			.navbar-fixed-top
 				.navbar-inner
 					.container
@@ -26,11 +27,11 @@ html
 						ul.nav
 							- if (player )
 								li.active
-									a(href="#") Continue
+									a(href="/user/#{player._id}") #{player.name}
 							li
 								a(href="#") Feedback
 							li
-								a(href="#") Quit
+								a#refreshpage(href="#QuitVN") Quit
 							- if (player)
 								li
 									a#signout(href="#") Sign Out

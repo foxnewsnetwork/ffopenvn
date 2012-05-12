@@ -20,9 +20,11 @@ var StorySchema = new Schema( {
 	category : { type : String , set : toNormalized } ,
 	cover : { type : String , default : "/images/ffopenvn.png" } ,
 	owner : { type : String , default : "anonymous" } ,
+	owner_name : { type : String, default : "anonymous" } ,
 	collaborators : [String] ,
 	start : String ,
 	chapters : {} ,
+	summary : { type : String, default : "Nothing here yet" } ,
 	data : {}
 } ); // end Schema
 // chapters are also stored in a linked hash

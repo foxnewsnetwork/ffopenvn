@@ -9,7 +9,7 @@ this.show = function(req, res) {
 	var query = req.query;
 	var usertab = query['usertab'] || false;
 	// change the search criteria back to  { _id : params.user } 
-	Player.findOne( { email : "foxnewsnetwork@gmail.com" }, function( err, user ) { 
+	Player.findOne( { _id  : params.user }, function( err, user ) { 
 		if ( user == undefined ) { 
 			res.render( "error/player.jade", { title : "FFOshitVN", player : false } );
 		} // end if

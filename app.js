@@ -77,7 +77,7 @@ app.get( '/', function(req, res){
 	} // end if
 	var ip = req.connection.remoteAddress;
 	if ( (/^127/).test(ip) ) { 
-		res.render("pages/index.ja.jade", data );
+		res.render("pages/index.jade", data );
 		return;
 	} // end if
 	var country = geo['country'];

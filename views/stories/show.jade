@@ -8,7 +8,13 @@ include partials/toolbar.jade
 .container
 	.row
 		.span12(style="margin-top : 2em;")
-			h1.centered #{story.title}
+			h1.centered #{story.title} 
+			h3.centered
+				a(href="/user/#{story.owner}?usertab=novel")
+					-if (story.owner_name == undefined)
+						#{story.owner}
+					-else
+						#{story.owner_name}
 	.row
 		#usercontent.centered
 			-if ( usertab )

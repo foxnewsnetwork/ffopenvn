@@ -11,17 +11,22 @@ style(type="text/css")
 		padding : 1em;
 	}
 script(type="text/javascript", src="/javascripts/stories/edit.js")
+include partials/toolbar.jade
 .container
-	.hero-unit
-		h1 #{story.title} *
-		p Manage story basics		
-		p
-			a.btn.btn-primary.large(href="/chapter?sid=#{story._id}") Chapter Editor
+	.row
+		.span12(style="margin-top : 2em;")
+			h1.centered #{story.title} 
+			h3.centered
+				a(href="/user/#{story.owner}?usertab=novel")
+					-if (story.owner_name == undefined)
+						#{story.owner}
+					-else
+						#{story.owner_name}
 	.row 
 		.span6
 			.meta-story
 				h2 Story Basics
-				form#story( action="/story/#{story._id}", method="put" )
+				form#story( action="/story/#{story._id}/edit", method="PUT" )
 					ul.newstory
 						li.newstory 
 							h4 Title

@@ -1,14 +1,41 @@
 style(type="text/css")
 	.novelcover { 
-		height : 250px;
-		background-color : rgb(234, 222, 234);
+		height : 200px;
+	}
+	.summarytext { 
+		width : 100%;
+		text-align : left;
+		background-color : rgb(234, 245, 240);
+	}
+	.commentstext { 
+		text-align : left;
+		background-color : rgb(244, 235, 234);
 	}
 .span7
-	img.novelcover(alt="story cover", src="#{story.cover}")
+	-if (story.cover)
+		img.novelcover(alt="story cover", src="#{story.cover}")
+	-else
+		img.novelcover(alt="default cover", src="/images/splash-mac.png")
 .span5
 	p
 		button#novelstart.btn.btn-primary.btn-large.obtrusive New Game &raquo; 
 	p
 		button#novelload.btn.btn-large.obtrusive Continue...
+	-if (player && story.owner == player._id)
+		h4 Admin Options: 
+			p
+				a#noveledit(href="/story/#{story._id}/edit") Editor
+.span6
+	.label.lefted
+		h1 Summary
+	h3.summarytext
+		-if (story.summary)
+			#{story.summary}
+		-else
+			| What's wrong with this shit?
+.span6
+	.label.lefted
+		h1 Latest Comments
+	h3.commentstext Sorry, feature not yet implemeneted
 .hiddencontent
 	input#storyid.hiddencontent(type="text", value="#{story._id}")

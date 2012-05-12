@@ -33,7 +33,8 @@ this.create = function(req, res){
 		title : params.title,
 		cover : params.cover ,
 		category : params.parent == "0" ? params.parent : "Original" ,
-		owner : user._id
+		owner : user._id ,
+		owner_name : user.name
 	} ); // end Story
 	story.save( function(err){
 		if(err) { 
@@ -76,4 +77,11 @@ this.index = function(req, res){
 	} ); // end find
 }; // end index
 
-this.update = function(req, res){ }; // end update
+this.update = function(req, res){ 
+	console.log("Stupid Niggers Here");
+	console.log(req.body);
+	if( req.session.user == undefined ) { 
+		return;
+	} // end if
+	res.redirect("back");
+}; // end update
