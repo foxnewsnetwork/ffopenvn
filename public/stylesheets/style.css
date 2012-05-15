@@ -363,3 +363,15 @@ li.featuredtabs {
 	padding-left : 1em;
 	padding-right : 1em;
 }
+ul.newstory{ 
+	list-style : none;
+}
+li.newstory{ 
+	width : 100%;
+}
+.meta-story{ 
+	background-color : rgb(243, 235, 255);
+	opacity : 0.85;
+	padding : 1em;
+}
+

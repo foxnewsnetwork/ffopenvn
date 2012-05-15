@@ -81,7 +81,32 @@ this.update = function(req, res){
 	console.log("Stupid Niggers Here");
 	console.log(req.body);
 	if( req.session.user == undefined ) { 
+		res.send( { error : "You do not have permission to mess with other people's junk" } );
 		return;
 	} // end if
-	res.redirect("back");
+	
+	// Step 0: Setting up the variables
+	var params = req.params;
+	var query = req.query;
+	var data = req.body.story;
+	// Step 1: Pull out the story in question
+	Story.findOne( { _id : params.story }, function(err, story) { 
+		if ( err ) { 
+			res.send( { error : err } );
+		} // end if 
+		else { 
+			// TODO: check for permission so that only the appropriate users can update
+			Story.update( { _id : story._id }, { $set : data }, { multi : false }, function(err, num) { 
+				if ( err ) { 
+					console.log(err);
+				} // end if
+				else { 
+					console.log( "update log" );
+					console.log( err );
+					console.log( num );
+					res.send( story );
+				} // end else
+			} ); // end update
+		} // end else
+	} ); // end findOne
 }; // end update

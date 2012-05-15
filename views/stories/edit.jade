@@ -1,22 +1,27 @@
-style(type="text/css")
-	ul.newstory{ 
-		list-style : none;
-	}
-	li.newstory{ 
-		width : 100%;
-	}
-	.meta-story{ 
-		background-color : rgb(243, 235, 255);
-		opacity : 0.85;
-		padding : 1em;
-	}
 script(type="text/javascript", src="/javascripts/stories/edit.js")
+script(type="text/javascript")
+	$(document).ready(function(){ 
+		$("#story").submit( function() { 
+			Flash( "Updating..." );
+			PutForm( "/story/#{story._id}", "#story", function(res){ 
+				Flash( "Update Successful!" );
+			} ); // end PutForm
+			return false;
+		} ); // end story.submit
+		
+		$("#addppl").click( function() { 
+			Flash( "Sorry, feature not implemented yet... " );
+		} ); // end click
+	} ); // end document.ready
+
 include partials/toolbar.jade
 .container
 	.row
 		.span12(style="margin-top : 2em;")
-			h1.centered #{story.title} 
-			h3.centered
+			h1.centered 
+				a(href="/story/#{story._id}")
+					#{story.title} 
+			h3.centered by: 
 				a(href="/user/#{story.owner}?usertab=novel")
 					-if (story.owner_name == undefined)
 						#{story.owner}
@@ -52,11 +57,11 @@ include partials/toolbar.jade
 						li.newstory 
 							img( alt="cover page image", src="#{story.cover}", style="width : 150px; height : 150px" )
 						li.newstory 
-							input#cover(name="story[cover]", type="text", value="#{story.category}")
+							input#cover(name="story[cover]", type="text", value="#{story.cover}")
 						li.newstory
 							h4 Summary
 						li.newstory
-							textarea#cover(name="story[summary]", type="text", value="#{story.summary}", rows="5", cols="40")							
+							textarea#summary(name="story[summary]", type="text", rows="5", cols="40") #{story.summary}
 						li.newstory
 							input.btn.btn-primary.large(type="submit", value="Modify") 
 		.span6
